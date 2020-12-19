@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="&#128525; Let's create a new chat"
+                android:text="&#129303; Create a new Instance"
                 style="@style/edittext"
                 android:textColor="@color/white"
                 android:padding="12dp"

@@ -65,10 +65,19 @@ public class loginFragment extends Fragment {
 
     private void createDialogCode() {
 
+
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_code_number_verification);
         dialog.setCancelable(true);
+        LinearLayout linearLayout = dialog.findViewById(R.id.login_verification_linearlayout_btn_container);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transitionToMain();
+                dialog.dismiss();
+            }
+        });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
