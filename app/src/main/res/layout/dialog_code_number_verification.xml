@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="250dp"
+    android:layout_height="150dp"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+
+    android:background="@drawable/white_plain_background">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_button_width"
+        android:layout_gravity="center"
+        android:id="@+id/login_linearlayout_number_container"
+        android:translationZ="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="@dimen/dp_button_height"
+        android:background="@drawable/input_background_pink_round"
+        android:orientation="horizontal"
+        >
+
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="&#129300;"
+            style="@style/edittext"
+            android:textColor="@color/white"
+            android:padding="12dp"
+            android:autoSizeTextType="uniform"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textColorLink="@color/white"
+            android:layout_width="match_parent"
+            android:maxLength="30"
+            android:hint="@string/code_txt"
+            android:maxLines="1"
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:background="@null"             />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_button_width"
+        android:layout_gravity="center"
+        android:id="@+id/login_linearlayout_btn_container"
+        android:translationZ="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="@dimen/dp_button_height"
+        android:background="@drawable/btn_round_dark_pink"
+        android:orientation="horizontal"
+       >
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="&#128073; Submit"
+            style="@style/edittext"
+            android:textColor="@color/white"
+            android:padding="12dp"
+            android:autoSizeTextType="uniform"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

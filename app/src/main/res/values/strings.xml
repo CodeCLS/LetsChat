@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LetsChat</string>
+    <string name="instagram_txt">Instagram</string>
+    <string name="telephone_number_txt">Telephone</string>
+    <string name="welcome_text">Hey there</string>
+    <string name="code_txt">Code</string>
+</resources>

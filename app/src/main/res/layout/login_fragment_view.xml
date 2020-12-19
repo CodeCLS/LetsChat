@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@color/primary"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ic_launcher_log_login_round"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:translationY="-150dp"
+        android:src="@mipmap/ic_launcher_foreground" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_text"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:translationY="-150dp"/>
+
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_button_width"
+        android:id="@+id/login_linearlayout_insta_container"
+        android:layout_gravity="center"
+        android:translationZ="20dp"
+        android:layout_height="@dimen/dp_button_height"
+        android:background="@drawable/input_background_pink_round"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@"
+            style="@style/edittext"
+            android:textColor="@color/white"
+            android:padding="12dp"
+            android:autoSizeTextType="uniform"
+            tools:targetApi="o" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textColorLink="@color/white"
+            android:layout_width="match_parent"
+            android:maxLength="30"
+            android:hint="@string/instagram_txt"
+            android:maxLines="1"
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:background="@null"             />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_button_width"
+        android:layout_gravity="center"
+        android:id="@+id/login_linearlayout_number_container"
+        android:translationZ="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="@dimen/dp_button_height"
+        android:background="@drawable/input_background_pink_round"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="&#128222;"
+            style="@style/edittext"
+            android:textColor="@color/white"
+            android:padding="12dp"
+            android:autoSizeTextType="uniform"
+            tools:targetApi="o" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textColorLink="@color/white"
+            android:layout_width="match_parent"
+            android:maxLength="30"
+            android:hint="@string/telephone_number_txt"
+            android:maxLines="1"
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:background="@null"             />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_button_width"
+        android:layout_gravity="center"
+        android:id="@+id/login_linearlayout_btn_container"
+        android:translationZ="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="@dimen/dp_button_height"
+        android:background="@drawable/btn_round_dark_pink"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="&#128064; Let's continue"
+            style="@style/edittext"
+            android:textColor="@color/white"
+            android:padding="12dp"
+            android:autoSizeTextType="uniform"
+            tools:targetApi="o" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

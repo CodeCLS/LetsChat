@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:layout_height="@dimen/chat_item_height">
+
+
+    <ImageView
+        android:id="@+id/additional_imageView_chat_item"
+        android:layout_width="@dimen/imageview_size"
+        android:layout_height="@dimen/imageview_size"
+        android:src="@color/pink_dark"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/color_for_chat_conversation_item"
+        android:layout_width="@dimen/imageview_size"
+        android:layout_gravity="center"
+        android:src="@color/pink_dark"
+        android:layout_margin="10dp"
+        android:layout_height="@dimen/imageview_size" />
+
+    <TextView
+        android:id="@+id/last_message_txt_item_chat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="20dp"
+        android:textColor="@color/pink_dark"
+        android:text="@string/appbar_scrolling_view_behavior"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:maxLines="1" />
+
+    <FrameLayout
+        android:layout_width="@dimen/imageview_size"
+        android:layout_height="@dimen/imageview_size"
+        android:layout_margin="10dp"
+
+
+        android:layout_gravity="center">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@drawable/round_circle" />
+
+        <TextView
+            android:id="@+id/unread_notifications"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/pink_dark"
+            android:text="99" />
+
+
+
+
+    </FrameLayout>
+
+
+
+</LinearLayout>
