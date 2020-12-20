@@ -1,6 +1,5 @@
 package cls.development.letschat.Fragments;
 
-import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,16 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import cls.development.letschat.Adapter.MainAdapterChats;
+import cls.development.letschat.AdapterCallbackFragment;
+import cls.development.letschat.FragmentSwitcher;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 
-public class MainFragment extends Fragment {
+public class AllChatsFragment extends Fragment implements AdapterCallbackFragment {
     private LinearLayout btnNewChatLinear;
     private TextView btnNewChat;
     private RecyclerView recyclerView;
@@ -56,8 +58,14 @@ public class MainFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Chat> array = new ArrayList<Chat>();
         array.add(new Chat(false,false, ContextCompat.getColor(getContext(),R.color.secondary),1230812,379187239,null,"Hello","2",null));
-        adapterChats = new MainAdapterChats(array);
+        adapterChats = new MainAdapterChats(array,this);
         recyclerView.setAdapter(adapterChats);
 
+    }
+
+    @Override
+    public void changeFragmentFromItemClick() {
+        FragmentSwitcher fragmentSwitcher = (FragmentSwitcher) getActivity();
+        fragmentSwitcher.changeToFragment(new ChatFragment());
     }
 }

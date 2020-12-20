@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+
+
+<LinearLayout
+    android:id="@+id/background_container_login"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
     android:background="@color/primary"
     android:layout_height="match_parent">
+
 
     <ImageView
         android:id="@+id/ic_launcher_log_login_round"
@@ -135,3 +146,21 @@
 
 
 </LinearLayout>
+
+    <View
+        android:id="@+id/darkened_background_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:alpha="0"
+        android:background="#000"/>
+
+    <cls.development.letschat.CustomViews.NumberVerificationView
+        android:id="@+id/verification_Container_Login"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:alpha="1"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content" />
+
+</FrameLayout>

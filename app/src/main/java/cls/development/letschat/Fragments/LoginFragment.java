@@ -1,10 +1,11 @@
 package cls.development.letschat.Fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -20,10 +22,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import cls.development.letschat.CustomViews.NumberVerificationView;
+import cls.development.letschat.FragmentSwitcher;
 import cls.development.letschat.R;
 
-public class loginFragment extends Fragment {
+public class LoginFragment extends androidx.fragment.app.Fragment {
     private static final String TAG = "LoginFragment" ;
+    private static final long CONSTANT_ANIMATION_DIALOG_DURATION = 100;
     private LinearLayout editTextInstagramLinear;
     private EditText editTextInstagram;
 
@@ -36,6 +41,9 @@ public class loginFragment extends Fragment {
     private LinearLayout continueButton;
     private TextView continueTextView;
     private long millis_start;
+    private NumberVerificationView verificationContainer;
+    private LinearLayout backgroundContainer;
+    private View darkBackground;
 
 
     @Override
@@ -47,11 +55,16 @@ public class loginFragment extends Fragment {
     }
 
     private void init() {
+        darkBackground = getView().findViewById(R.id.darkened_background_login);
+        verificationContainer = getView().findViewById(R.id.verification_Container_Login);
         continueButton = getView().findViewById(R.id.login_linearlayout_btn_container);
+        backgroundContainer = getView().findViewById(R.id.background_container_login);
+
         //onPress();
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 createDialogCode();
                 //transitionToMain();
@@ -63,24 +76,36 @@ public class loginFragment extends Fragment {
     }
 
     private void createDialogCode() {
+        verificationContainer.setVisibility(View.VISIBLE);
+        darkBackground.setVisibility(View.VISIBLE);
 
-
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_code_number_verification);
-        dialog.setCancelable(true);
-        LinearLayout linearLayout = dialog.findViewById(R.id.login_verification_linearlayout_btn_container);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
+        verificationContainer.animate().alpha(1f).setDuration(CONSTANT_ANIMATION_DIALOG_DURATION);
+        darkBackground.animate().alpha(0.9f).setDuration(CONSTANT_ANIMATION_DIALOG_DURATION);
+        darkBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transitionToMain();
-                dialog.dismiss();
+                dialogAnimationToEnd();
+
             }
         });
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.show();
 
 
+
+    }
+    private void dialogAnimationToEnd( ) {
+        ViewPropertyAnimator viewPropertyAnimator = verificationContainer.animate().alpha(0f).setDuration(CONSTANT_ANIMATION_DIALOG_DURATION);
+        darkBackground.animate().alpha(0f).setDuration(CONSTANT_ANIMATION_DIALOG_DURATION);
+        viewPropertyAnimator.setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                verificationContainer.setVisibility(View.GONE);
+                darkBackground.setVisibility(View.GONE);
+                viewPropertyAnimator.setListener(null);
+                darkBackground.setOnClickListener(null);
+
+            }
+        });
 
     }
 
@@ -121,12 +146,9 @@ public class loginFragment extends Fragment {
     }
 
     private void transitionToMain() {
-        FragmentManager fragmentManager2 = getFragmentManager();
-        FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
-        Fragment fragment2 = new MainFragment();
-        fragmentTransaction2.addToBackStack("xyz");
-        fragmentTransaction2.replace(R.id.mainFrame, fragment2);
-        fragmentTransaction2.commit();
+        FragmentSwitcher fragmentSwitcher = (FragmentSwitcher) getActivity();
+        fragmentSwitcher.changeToFragment(new AllChatsFragment());
+
     }
 
     @Nullable

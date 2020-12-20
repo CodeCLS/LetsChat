@@ -12,22 +12,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import cls.development.letschat.AdapterCallbackFragment;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 
 public class MainAdapterChats extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static Fragment fragmentInstance;
     private static final String TAG = "Adapter";
     private ArrayList<Chat> chatObjects = new ArrayList<>();
     private Context context;
 
-    public MainAdapterChats(ArrayList<Chat> chatObjects) {
+    public MainAdapterChats(ArrayList<Chat> chatObjects,Fragment instance) {
         this.chatObjects = chatObjects;
+        MainAdapterChats.fragmentInstance = instance;
     }
 
     @NonNull
@@ -76,7 +80,7 @@ public class MainAdapterChats extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
-            //container = itemView.findViewById(R.id.container_chat_item);
+            container = itemView.findViewById(R.id.container_chat_item);
             extraImageView = itemView.findViewById(R.id.additional_imageView_chat_item);
             roundImageViewColor = itemView.findViewById(R.id.color_for_chat_conversation_item);
             txtContentLastMessage = itemView.findViewById(R.id.last_message_txt_item_chat);
@@ -87,6 +91,16 @@ public class MainAdapterChats extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         private void initActions() {
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AdapterCallbackFragment adapterCallbackFragment = (AdapterCallbackFragment)MainAdapterChats.fragmentInstance;
+                    adapterCallbackFragment.changeFragmentFromItemClick();
+
+
+                }
+            });
 
 
         }

@@ -2,39 +2,42 @@ package cls.development.letschat;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.view.View;
+
+import androidx.fragment.app.FragmentManager;
 
 
+import cls.development.letschat.CustomViews.HeaderView;
+import cls.development.letschat.Fragments.LoginFragment;
 
-
-import java.io.IOException;
-
-import cls.development.letschat.Fragments.loginFragment;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentSwitcher {
+    public HeaderView headerView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FrameLayout frameLayout = findViewById(R.id.mainFrame);
-        FragmentManager fragmentManager = getFragmentManager();
+        transitionToFragment(new LoginFragment());
+    }
+
+    @Override
+    public void changeToFragment(Fragment fragment) {
+      transitionToFragment(fragment);
+
+    }
+
+    private void transitionToFragment(Fragment fragment) {
+        headerView.setVisibility(View.VISIBLE);
+        if(fragment instanceof LoginFragment)
+            headerView.setVisibility(View.GONE);
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment loginFragment = new loginFragment();
-        fragmentTransaction.replace(R.id.mainFrame, loginFragment);
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+
     }
 }
