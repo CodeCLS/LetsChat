@@ -7,36 +7,11 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     tools:context=".MainActivity">
-    <LinearLayout
-        android:id="@+id/topbar"
+
+    <cls.development.letschat.CustomViews.HeaderView
+        android:id="@+id/header_view_main"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:layout_width="@dimen/imageview_size_big"
-            android:layout_height="@dimen/imageview_size_big"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:src="@mipmap/ic_launcher_foreground" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-
-            android:textColor="@color/darkText"
-            android:text="@string/instagram_test_tag"
-            android:gravity="center" />
-        <ImageView
-            android:layout_width="@dimen/imageview_size_big"
-            android:layout_height="@dimen/imageview_size_big"
-            android:layout_gravity="center"
-
-            android:layout_marginEnd="10dp"
-
-            android:src="@mipmap/ic_launcher_foreground" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
 
     <FrameLayout

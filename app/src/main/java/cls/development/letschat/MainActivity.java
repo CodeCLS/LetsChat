@@ -19,7 +19,12 @@ public class MainActivity extends AppCompatActivity implements FragmentSwitcher 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViews();
         transitionToFragment(new LoginFragment());
+    }
+
+    private void initViews() {
+        headerView = findViewById(R.id.header_view_main);
     }
 
     @Override
