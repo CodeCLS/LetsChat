@@ -1,7 +1,6 @@
 package cls.development.letschat.Fragments;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -124,7 +123,7 @@ public class loginFragment extends Fragment {
     private void transitionToMain() {
         FragmentManager fragmentManager2 = getFragmentManager();
         FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
-        Fragment fragment2 = new mainFragment();
+        Fragment fragment2 = new MainFragment();
         fragmentTransaction2.addToBackStack("xyz");
         fragmentTransaction2.replace(R.id.mainFrame, fragment2);
         fragmentTransaction2.commit();

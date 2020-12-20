@@ -22,7 +22,7 @@ import cls.development.letschat.Adapter.MainAdapterChats;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 
-public class mainFragment extends Fragment {
+public class MainFragment extends Fragment {
     private LinearLayout btnNewChatLinear;
     private TextView btnNewChat;
     private RecyclerView recyclerView;
