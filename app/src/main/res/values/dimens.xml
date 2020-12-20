@@ -6,4 +6,5 @@
     <dimen name="dp_button_width_extended">250dp</dimen>
     <dimen name="chat_item_height">60dp</dimen>
     <dimen name="imageview_size">25dp</dimen>
+    <dimen name="imageview_size_big">40dp</dimen>
 </resources>
