@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import cls.development.letschat.R;
 
 public class MessageView extends LinearLayout {
+    private static final String CONSTANT_SENDER_SELF = "self";
+    private String sender;
     public MessageView(Context context) {
         super(context);
     }
@@ -26,8 +28,16 @@ public class MessageView extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
     private void init(){
-        LayoutInflater.from(getContext()).inflate(R.layout.message_view, this);
+        setMessageBackground();
 
 
+
+    }
+
+    private void setMessageBackground() {
+        if(sender.equals(CONSTANT_SENDER_SELF))
+            LayoutInflater.from(getContext()).inflate(R.layout.message_view_self, this);
+        else
+            LayoutInflater.from(getContext()).inflate(R.layout.message_view_other, this);
     }
 }
