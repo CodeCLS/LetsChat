@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,19 +66,30 @@ public class MainAdapterChats extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     public class MainViewHolder extends RecyclerView.ViewHolder{
+        private LinearLayout container;
         private ImageView extraImageView;
         private de.hdodenhof.circleimageview.CircleImageView roundImageViewColor;
         private TextView txtContentLastMessage;
         private TextView txtUnreadMessages;
 
 
+
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
+            //container = itemView.findViewById(R.id.container_chat_item);
             extraImageView = itemView.findViewById(R.id.additional_imageView_chat_item);
             roundImageViewColor = itemView.findViewById(R.id.color_for_chat_conversation_item);
             txtContentLastMessage = itemView.findViewById(R.id.last_message_txt_item_chat);
             txtUnreadMessages = itemView.findViewById(R.id.unread_notifications);
 
+            initActions();
+
+        }
+
+        private void initActions() {
+
+
         }
     }
+
 }
