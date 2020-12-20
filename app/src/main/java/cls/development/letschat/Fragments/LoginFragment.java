@@ -44,6 +44,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     private NumberVerificationView verificationContainer;
     private LinearLayout backgroundContainer;
     private View darkBackground;
+    private static FragmentSwitcher fragmentSwitcher;
 
 
     @Override
@@ -55,10 +56,13 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     }
 
     private void init() {
+        fragmentSwitcher = (FragmentSwitcher) getActivity();
+
         darkBackground = getView().findViewById(R.id.darkened_background_login);
         verificationContainer = getView().findViewById(R.id.verification_Container_Login);
         continueButton = getView().findViewById(R.id.login_linearlayout_btn_container);
         backgroundContainer = getView().findViewById(R.id.background_container_login);
+        verificationContainer.initFromFragment(this);
 
         //onPress();
         continueButton.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +150,6 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     }
 
     private void transitionToMain() {
-        FragmentSwitcher fragmentSwitcher = (FragmentSwitcher) getActivity();
         fragmentSwitcher.changeToFragment(new AllChatsFragment());
 
     }
@@ -155,5 +158,10 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return LayoutInflater.from(container.getContext()).inflate(R.layout.login_fragment_view,container,false);
+    }
+
+    public void numberVerificationSubmit() {
+        transitionToMain();
+
     }
 }
