@@ -2,11 +2,7 @@ package cls.development.letschat.Fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,16 +10,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.transition.Fade;
 
 import cls.development.letschat.CustomViews.NumberVerificationView;
-import cls.development.letschat.FragmentSwitcher;
 import cls.development.letschat.R;
 
 public class LoginFragment extends androidx.fragment.app.Fragment {
@@ -44,7 +41,6 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     private NumberVerificationView verificationContainer;
     private LinearLayout backgroundContainer;
     private View darkBackground;
-    private static FragmentSwitcher fragmentSwitcher;
 
 
     @Override
@@ -56,7 +52,6 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     }
 
     private void init() {
-        fragmentSwitcher = (FragmentSwitcher) getActivity();
 
         darkBackground = getView().findViewById(R.id.darkened_background_login);
         verificationContainer = getView().findViewById(R.id.verification_Container_Login);
@@ -131,7 +126,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
                         Log.d(TAG, "onTouchend: " + millis_end);
 
                         if(millis_end-millis_start < 200){
-                            transitionToMain();
+                            transitionToAllChats();
                         }
                     case MotionEvent.ACTION_UP:
                         long millis_end_2 = System.currentTimeMillis();
@@ -149,8 +144,16 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
         });
     }
 
-    private void transitionToMain() {
-        fragmentSwitcher.changeToFragment(new AllChatsFragment());
+    private void transitionToAllChats() {
+        AllChatsFragment allChatsFragment = new AllChatsFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        allChatsFragment.setEnterTransition(new Fade());
+        allChatsFragment.setExitTransition(new Fade());
+        fragmentTransaction.replace(R.id.mainFrame,allChatsFragment);
+        fragmentTransaction.commit();
+
+
 
     }
 
@@ -161,7 +164,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     }
 
     public void numberVerificationSubmit() {
-        transitionToMain();
+        transitionToAllChats();
 
     }
 }

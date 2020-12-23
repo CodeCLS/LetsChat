@@ -1,6 +1,5 @@
 package cls.development.letschat.Fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Fade;
 
 import java.util.ArrayList;
 
 import cls.development.letschat.Adapter.MainAdapterChats;
 import cls.development.letschat.AdapterCallbackFragment;
-import cls.development.letschat.FragmentSwitcher;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 
@@ -65,7 +66,16 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
 
     @Override
     public void changeFragmentFromItemClick() {
-        FragmentSwitcher fragmentSwitcher = (FragmentSwitcher) getActivity();
-        fragmentSwitcher.changeToFragment(new ChatFragment());
+        transitionToChat();
+    }
+
+    private void transitionToChat() {
+        ChatFragment chatFragment = new ChatFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        chatFragment.setEnterTransition(new Fade());
+        chatFragment.setExitTransition(new Fade());
+        fragmentTransaction.replace(R.id.mainFrame,chatFragment);
+        fragmentTransaction.commit();
     }
 }

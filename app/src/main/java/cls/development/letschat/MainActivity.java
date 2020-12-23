@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import cls.development.letschat.CustomViews.HeaderView;
 import cls.development.letschat.Fragments.LoginFragment;
 
-public class MainActivity extends AppCompatActivity implements FragmentSwitcher {
+public class MainActivity extends AppCompatActivity {
     public HeaderView headerView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,11 +27,6 @@ public class MainActivity extends AppCompatActivity implements FragmentSwitcher 
         headerView = findViewById(R.id.header_view_main);
     }
 
-    @Override
-    public void changeToFragment(Fragment fragment) {
-      transitionToFragment(fragment);
-
-    }
 
     private void transitionToFragment(Fragment fragment) {
         headerView.setVisibility(View.VISIBLE);
