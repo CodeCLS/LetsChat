@@ -55,7 +55,7 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
     }
 
     private void initRecyclerView() {
-        recyclerView = getView().findViewById(R.id.chat_recyclerview_main);
+        recyclerView = getView().findViewById(R.id.recyclerview_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Chat> array = new ArrayList<Chat>();
         array.add(new Chat(false,false, ContextCompat.getColor(getContext(),R.color.secondary),1230812,379187239,null,"Hello","2",null));

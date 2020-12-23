@@ -8,10 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import cls.development.letschat.Adapter.ChatAdapter;
 import cls.development.letschat.R;
 
 public class ChatFragment extends Fragment {
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -26,6 +30,9 @@ public class ChatFragment extends Fragment {
     }
 
     private void init() {
+        recyclerView = getView().findViewById(R.id.chat_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new ChatAdapter());
 
     }
 }

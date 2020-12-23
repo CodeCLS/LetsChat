@@ -90,7 +90,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chat_recyclerview_main"
+            android:id="@+id/recyclerview_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

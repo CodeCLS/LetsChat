@@ -7,4 +7,5 @@
     <dimen name="chat_item_height">60dp</dimen>
     <dimen name="imageview_size">25dp</dimen>
     <dimen name="imageview_size_big">40dp</dimen>
+    <dimen name="message_radius">10dp</dimen>
 </resources>
