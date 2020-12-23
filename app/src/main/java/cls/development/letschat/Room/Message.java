@@ -29,4 +29,76 @@ public class Message {
         this.canBeDownloaded = canBeDownloaded;
         this.isDownloaded = isDownloaded;
     }
+
+    public long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(long messageId) {
+        this.messageId = messageId;
+    }
+
+    public long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getContentText() {
+        return contentText;
+    }
+
+    public void setContentText(String contentText) {
+        this.contentText = contentText;
+    }
+
+    public Media getMediaContent() {
+        return mediaContent;
+    }
+
+    public void setMediaContent(Media mediaContent) {
+        this.mediaContent = mediaContent;
+    }
+
+    public long getSendDate() {
+        return sendDate;
+    }
+
+    public void setSendDate(long sendDate) {
+        this.sendDate = sendDate;
+    }
+
+    public long getSender() {
+        return sender;
+    }
+
+    public void setSender(long sender) {
+        this.sender = sender;
+    }
+
+    public String getSenderAsString() {
+        return senderAsString;
+    }
+
+    public void setSenderAsString(String senderAsString) {
+        this.senderAsString = senderAsString;
+    }
+
+    public boolean isCanBeDownloaded() {
+        return canBeDownloaded;
+    }
+
+    public void setCanBeDownloaded(boolean canBeDownloaded) {
+        this.canBeDownloaded = canBeDownloaded;
+    }
+
+    public boolean isDownloaded() {
+        return isDownloaded;
+    }
+
+    public void setDownloaded(boolean downloaded) {
+        isDownloaded = downloaded;
+    }
 }

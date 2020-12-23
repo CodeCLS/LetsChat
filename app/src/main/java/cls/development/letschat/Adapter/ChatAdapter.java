@@ -38,23 +38,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ChatViewHolder chatViewHolder = (ChatViewHolder) holder;
-        chatViewHolder.textViewContent.setText("asdasd");
+        chatViewHolder.textViewContent.setText(chat.getMessageArrayList().get(position).getContentText());
 
     }
 
     @Override
     public int getItemCount() {
-        return 6;
-        //return chat.getMessageArrayList().size();
+        return chat.getMessageArrayList().size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        //if (chat.getMessageArrayList().get(position).senderAsString.equals(selfString))
-        //    return selfInt;
-        //else if(chat.getMessageArrayList().get(position).senderAsString.equals(otherString))
-        //    return otherInt;
-        return 0;
+        if (chat.getMessageArrayList().get(position).getSenderAsString().equals(selfString))
+            return selfInt;
+        else if(chat.getMessageArrayList().get(position).getSenderAsString().equals(otherString))
+            return otherInt;
+        return errorHandlingSender;
     }
     public static class ChatViewHolder extends RecyclerView.ViewHolder{
         TextView textViewContent;

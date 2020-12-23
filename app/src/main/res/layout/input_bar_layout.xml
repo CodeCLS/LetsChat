@@ -9,7 +9,7 @@
     android:layout_margin="5dp"
     android:paddingBottom="2dp"
     android:layout_height="wrap_content">
-
+<!--
     <TextView
         android:layout_width="25dp"
         android:layout_height="25dp"
@@ -19,13 +19,16 @@
         android:background="@drawable/round_clear_white_background_emoji"
         android:textColor="@color/white"
         android:text="&#128512;"/>
+        -->
 
     <EditText
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:inputType="textCapSentences|textMultiLine"
         android:maxLength="2000"
+        android:textColor="#000"
         android:maxLines="4"
+
         android:layout_height="wrap_content"
         />
     <TextView

@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="0dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="@id/guideline"
-    app:layout_constraintTop_toTopOf="parent"
+    android:orientation="vertical"
+    android:minHeight="50dp"
+    android:gravity="center"
+    android:layout_margin="2dp"
+    android:elevation="3dp"
+    android:padding="2dp"
+    android:layout_gravity="end"
+
+
+    android:background="@drawable/message_background_other"
+    >
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/text_chat_message_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight=".70"
+            android:text="aikojhsliausdhialusdha" />
+    </LinearLayout>
 
 
 
-    android:background="@drawable/message_background_other">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
 
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

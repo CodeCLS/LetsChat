@@ -5,6 +5,10 @@
 
     <cls.development.letschat.CustomViews.HeaderChat
         android:layout_width="match_parent"
+        android:elevation="10dp"
+        android:layout_marginBottom="3dp"
+
+        android:background="@color/primary"
         android:layout_height="100dp" />
     <LinearLayout
         android:layout_width="match_parent"
