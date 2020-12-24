@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import cls.development.letschat.Adapter.ChatAdapter;
 import cls.development.letschat.R;
 import cls.development.letschat.ViewModel;
+import cls.development.letschat.ViewModelFactory;
 
 public class ChatFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -30,14 +31,15 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(this,null).get(ViewModel.class);
+        ViewModelFactory viewModelFactory = new ViewModelFactory();
+        viewModel = new ViewModelProvider(requireActivity(),viewModelFactory).get(ViewModel.class);
         init();
     }
 
     private void init() {
         recyclerView = getView().findViewById(R.id.chat_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        //recyclerView.setAdapter(new ChatAdapter(getTra));
+        recyclerView.setAdapter(new ChatAdapter(viewModel.getSelectedChat()));
 
     }
 }

@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.Fade;
@@ -26,6 +27,8 @@ import cls.development.letschat.AdapterCallbackFragment;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 import cls.development.letschat.Room.Message;
+import cls.development.letschat.ViewModel;
+import cls.development.letschat.ViewModelFactory;
 
 public class AllChatsFragment extends Fragment implements AdapterCallbackFragment {
     public static final String CONSTANT_TRANSACTION_CHAT_BUNDLE_NAME = "selected_chat";
@@ -36,7 +39,7 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
     private ImageView copyBtn;
     private ImageView settingsBtn;
     private ImageView feedbackBtn;
-
+    private ViewModel viewModel;
     private MainAdapterChats adapterChats;
     @Nullable
     @Override
@@ -47,6 +50,8 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ViewModelFactory viewModelFactory = new ViewModelFactory();
+        viewModel = new ViewModelProvider(requireActivity(),viewModelFactory).get(ViewModel.class);
         init();
     }
 
@@ -62,14 +67,16 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Chat> array = new ArrayList<Chat>();
         ArrayList<Message> arrayPlaceHolder = new ArrayList<>();
-        array.add(new Chat(false,false, ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.secondary),1230812,379187239,arrayPlaceHolder,"Hello","2",null));
+        //array.add(new Chat(false,false, ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.secondary),1230812,379187239,arrayPlaceHolder,"Hello","2",null));
         adapterChats = new MainAdapterChats(array,this);
         recyclerView.setAdapter(adapterChats);
 
     }
 
     @Override
-    public void changeFragmentFromItemClick() {
+    public void changeFragmentFromItemClick(Chat chat) {
+        viewModel.setSelectedChat(chat);
+
         transitionToChat();
     }
 

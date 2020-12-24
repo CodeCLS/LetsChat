@@ -96,7 +96,7 @@ public class MainAdapterChats extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onClick(View v) {
 
                     AdapterCallbackFragment adapterCallbackFragment = (AdapterCallbackFragment)MainAdapterChats.fragmentInstance;
-                    adapterCallbackFragment.changeFragmentFromItemClick();
+                    adapterCallbackFragment.changeFragmentFromItemClick(chatObjects.get(getAdapterPosition()));
 
 
                 }

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ViewModelFactory viewModelFactory = new ViewModelFactory();
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        viewModel = new ViewModelProvider(this,viewModelFactory).get(ViewModel.class);
 
         initViews();
         transitionToFragment(new LoginFragment());
