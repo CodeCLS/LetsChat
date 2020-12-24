@@ -46,6 +46,7 @@ public class FirebaseClient {
         return firebaseUser != null;
     }
     public void sendVerificationCode(String number, Activity activity, PhoneAuthProvider.OnVerificationStateChangedCallbacks callback){
+        Log.d(TAG, "sendVerificationCode123: " + number);
         options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(number)       // Phone number to verify

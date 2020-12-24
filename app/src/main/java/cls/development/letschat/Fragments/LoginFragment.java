@@ -52,7 +52,6 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
         super.onViewCreated(view, savedInstanceState);
         ViewModelFactory viewModelFactory = new ViewModelFactory();
         viewModel = new ViewModelProvider(requireActivity(),viewModelFactory).get(ViewModel.class);
-        viewModel.signUpWithInstaAndNumber("+4917641025403" , "calebseeasdasseawew3aling" ,getActivity(),getContext(),view );
 
 
         init();
@@ -70,6 +69,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewModel.signUpWithInstaAndNumber("+4917641025403" , "calebseeling" ,getActivity(),getContext(),getView() );
 
 
 
