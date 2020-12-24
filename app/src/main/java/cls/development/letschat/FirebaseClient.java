@@ -1,6 +1,7 @@
 package cls.development.letschat;
 
 import android.app.Activity;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +15,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class FirebaseClient {
+    private static final String TAG = "FirebaseClient";
     public static FirebaseClient dataRepository;
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
@@ -30,10 +32,17 @@ public class FirebaseClient {
     }
 
     private void init() {
-        this.firebaseUser = mAuth.getCurrentUser();
+        try {
+            this.firebaseUser = mAuth.getCurrentUser();
+        }
+        catch (Exception e){
+            Log.e(TAG, "initError: "  + e);
+
+        }
     }
 
-    public void getUid() {
+    public String getUid() {
+        return mAuth.getUid();
 
     }
     public boolean currentlyLoggedIn(){

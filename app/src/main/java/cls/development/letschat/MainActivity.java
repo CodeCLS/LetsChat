@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentManager;
@@ -15,6 +16,7 @@ import cls.development.letschat.CustomViews.HeaderView;
 import cls.development.letschat.Fragments.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "Main";
     private ViewModel viewModel;
     public HeaderView headerView;
     @Override
@@ -34,15 +36,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void transitionToFragment(Fragment fragment) {
-        headerView.setVisibility(View.VISIBLE);
         if(fragment instanceof LoginFragment)
             headerView.setVisibility(View.GONE);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mainFrame, fragment);
+        fragmentTransaction.replace(R.id.mainFrame, fragment , "LoginFragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
 
     }
+
+    public void setHeaderVisibility(int visibility){
+        headerView.setVisibility(visibility);
+    }
+
+
+
 }
