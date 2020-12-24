@@ -19,25 +19,46 @@
     android:gravity="center"
     android:background="@color/primary"
     android:layout_height="match_parent">
-
-
-    <ImageView
-        android:id="@+id/ic_launcher_log_login_round"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:translationY="-150dp"
-        android:src="@mipmap/ic_launcher_foreground" />
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome_text"
-        android:textColor="@color/white"
-        android:textSize="15sp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:gravity="center"
-        android:translationY="-150dp"/>
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/ic_launcher_log_login_round"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:elevation="@dimen/elevation_image"
+            android:src="@mipmap/ic_launcher_foreground" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_text"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:background="@drawable/round_clear_white_background_emoji"
+            android:textColor="@color/black"
+            android:elevation="@dimen/text_elevation"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:textSize="13sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="@dimen/dp_button_width"
@@ -144,7 +165,7 @@
             tools:targetApi="o" />
 
     </LinearLayout>
-
+    </LinearLayout>
 
 
 </LinearLayout>

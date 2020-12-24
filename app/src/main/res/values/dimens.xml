@@ -9,4 +9,5 @@
     <dimen name="imageview_size_big">40dp</dimen>
     <dimen name="message_radius">10dp</dimen>
     <dimen name="elevation_image">7dp</dimen>
+    <dimen name="text_elevation">5dp</dimen>
 </resources>

@@ -2,7 +2,7 @@
     <string name="app_name">LetsChat</string>
     <string name="instagram_txt">Instagram</string>
     <string name="telephone_number_txt">Telephone</string>
-    <string name="welcome_text">Hey there</string>
+    <string name="welcome_text">All your messages are anonymous, secure and most importantly only available for 24 hours</string>
     <string name="code_txt">Code</string>
     <string name="instagram_test_tag">@CodingCaleb</string>
 </resources>
