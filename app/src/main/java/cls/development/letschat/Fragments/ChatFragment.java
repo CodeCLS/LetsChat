@@ -32,7 +32,7 @@ public class ChatFragment extends Fragment {
     private void init() {
         recyclerView = getView().findViewById(R.id.chat_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new ChatAdapter());
+        recyclerView.setAdapter(new ChatAdapter(getTra));
 
     }
 }

@@ -23,6 +23,11 @@ import static cls.development.letschat.MessageManager.selfString;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Chat chat;
+
+    public ChatAdapter(Chat chat) {
+        this.chat = chat;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

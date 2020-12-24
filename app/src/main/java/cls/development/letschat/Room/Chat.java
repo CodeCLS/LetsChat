@@ -1,19 +1,21 @@
 package cls.development.letschat.Room;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.room.Entity;
 
 import java.util.ArrayList;
 
 public class Chat {
+    private static final String TAG = "ChatModel";
     private boolean pinned;
     private boolean favorite;
     private int color;
     private long createdDate;
     private long instanceDate;
     private String lastMessageContent;
-    private ArrayList<Message> messageArrayList= new ArrayList<>();
+    private ArrayList<Message> messageArrayList = new ArrayList<>();
     private String unreadMessagesCount;
     private Drawable extraImage;
 

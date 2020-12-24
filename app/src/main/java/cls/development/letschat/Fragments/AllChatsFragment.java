@@ -19,13 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.Fade;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import cls.development.letschat.Adapter.MainAdapterChats;
 import cls.development.letschat.AdapterCallbackFragment;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
+import cls.development.letschat.Room.Message;
 
 public class AllChatsFragment extends Fragment implements AdapterCallbackFragment {
+    public static final String CONSTANT_TRANSACTION_CHAT_BUNDLE_NAME = "selected_chat";
     private LinearLayout btnNewChatLinear;
     private TextView btnNewChat;
     private RecyclerView recyclerView;
@@ -58,7 +61,8 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
         recyclerView = getView().findViewById(R.id.recyclerview_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Chat> array = new ArrayList<Chat>();
-        array.add(new Chat(false,false, ContextCompat.getColor(getContext(),R.color.secondary),1230812,379187239,null,"Hello","2",null));
+        ArrayList<Message> arrayPlaceHolder = new ArrayList<>();
+        array.add(new Chat(false,false, ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.secondary),1230812,379187239,arrayPlaceHolder,"Hello","2",null));
         adapterChats = new MainAdapterChats(array,this);
         recyclerView.setAdapter(adapterChats);
 
@@ -78,4 +82,5 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
         fragmentTransaction.replace(R.id.mainFrame,chatFragment);
         fragmentTransaction.commit();
     }
+
 }
