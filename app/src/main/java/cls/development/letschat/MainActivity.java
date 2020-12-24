@@ -8,17 +8,22 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 
 import cls.development.letschat.CustomViews.HeaderView;
 import cls.development.letschat.Fragments.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
+    private ViewModel viewModel;
     public HeaderView headerView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ViewModelFactory viewModelFactory = new ViewModelFactory();
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+
         initViews();
         transitionToFragment(new LoginFragment());
     }
