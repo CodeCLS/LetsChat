@@ -15,6 +15,6 @@ public class DataRepository {
     }
 
     public void getFirebaseUid(){
-        return FirebaseClient
+        return FirebaseClient.getInstance().getUid();
     }
 }
