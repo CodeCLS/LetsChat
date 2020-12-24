@@ -2,7 +2,8 @@
     <string name="app_name">LetsChat</string>
     <string name="instagram_txt">Instagram</string>
     <string name="telephone_number_txt">Telephone</string>
-    <string name="welcome_text">All your messages are anonymous, secure and most importantly only available for 24 hours</string>
+    <string name="welcome_text">In LetsChat all your messages are anonymous, secure and most importantly only available for 24 hours. </string>
     <string name="code_txt">Code</string>
     <string name="instagram_test_tag">@CodingCaleb</string>
+    <string name="wrong_insta">It seems that this instagram user doesn\'t exist. Please change it</string>
 </resources>

@@ -29,6 +29,7 @@ public class FirebaseClient {
 
     private void init() {
         try {
+            this.mAuth = FirebaseAuth.getInstance();
             this.firebaseUser = mAuth.getCurrentUser();
         }
         catch (Exception e){

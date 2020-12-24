@@ -18,9 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.transition.Fade;
 
 import cls.development.letschat.CustomViews.NumberVerificationView;
+import cls.development.letschat.FrontendManagement.ViewModel;
+import cls.development.letschat.FrontendManagement.ViewModelFactory;
 import cls.development.letschat.R;
 
 public class LoginFragment extends androidx.fragment.app.Fragment {
@@ -41,11 +44,15 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     private NumberVerificationView verificationContainer;
     private LinearLayout backgroundContainer;
     private View darkBackground;
+    private ViewModel viewModel;
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ViewModelFactory viewModelFactory = new ViewModelFactory();
+        viewModel = new ViewModelProvider(requireActivity(),viewModelFactory).get(ViewModel.class);
+        viewModel.signUpWithInstaAndNumber("+4917641025403" , "calebseeasdasseawew3aling" ,getActivity(),getContext(),view );
 
 
         init();
@@ -63,6 +70,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
 
                 createDialogCode();
