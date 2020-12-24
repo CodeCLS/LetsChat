@@ -1,7 +1,8 @@
-package cls.development.letschat;
+package cls.development.letschat.FrontendManagement;
 
 import androidx.lifecycle.MutableLiveData;
 
+import cls.development.letschat.OnlineData.DataRepository;
 import cls.development.letschat.Room.Chat;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {

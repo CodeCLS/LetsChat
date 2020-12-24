@@ -1,4 +1,4 @@
-package cls.development.letschat;
+package cls.development.letschat.FrontendManagement;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;

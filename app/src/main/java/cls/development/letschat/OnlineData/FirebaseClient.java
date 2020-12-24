@@ -1,14 +1,10 @@
-package cls.development.letschat;
+package cls.development.letschat.OnlineData;
 
 import android.app.Activity;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 

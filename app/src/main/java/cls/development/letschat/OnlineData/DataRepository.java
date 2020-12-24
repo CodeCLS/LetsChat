@@ -1,4 +1,4 @@
-package cls.development.letschat;
+package cls.development.letschat.OnlineData;
 
 import android.app.Activity;
 

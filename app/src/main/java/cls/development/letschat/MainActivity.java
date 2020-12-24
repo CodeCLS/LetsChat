@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentManager;
@@ -14,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import cls.development.letschat.CustomViews.HeaderView;
 import cls.development.letschat.Fragments.LoginFragment;
+import cls.development.letschat.FrontendManagement.ViewModel;
+import cls.development.letschat.FrontendManagement.ViewModelFactory;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Main";

@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import cls.development.letschat.Adapter.ChatAdapter;
 import cls.development.letschat.R;
-import cls.development.letschat.ViewModel;
-import cls.development.letschat.ViewModelFactory;
+import cls.development.letschat.FrontendManagement.ViewModel;
+import cls.development.letschat.FrontendManagement.ViewModelFactory;
 
 public class ChatFragment extends Fragment {
     private RecyclerView recyclerView;

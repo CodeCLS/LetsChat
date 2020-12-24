@@ -1,6 +1,7 @@
 package cls.development.letschat.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,14 +24,16 @@ import java.util.Objects;
 
 import cls.development.letschat.Adapter.MainAdapterChats;
 import cls.development.letschat.AdapterCallbackFragment;
+import cls.development.letschat.MainActivity;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 import cls.development.letschat.Room.Message;
-import cls.development.letschat.ViewModel;
-import cls.development.letschat.ViewModelFactory;
+import cls.development.letschat.FrontendManagement.ViewModel;
+import cls.development.letschat.FrontendManagement.ViewModelFactory;
 
 public class AllChatsFragment extends Fragment implements AdapterCallbackFragment {
     public static final String CONSTANT_TRANSACTION_CHAT_BUNDLE_NAME = "selected_chat";
+    private static final String TAG = "AllChatsFragment";
     private LinearLayout btnNewChatLinear;
     private TextView btnNewChat;
     private RecyclerView recyclerView;
@@ -59,7 +61,18 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
         btnNewChat = getView().findViewById(R.id.btn_new_chat_txt);
         btnNewChatLinear = getView().findViewById(R.id.linear_main_btn_chat_new);
         initRecyclerView();
+        changeHeaderVisibility();
 
+    }
+
+    private void changeHeaderVisibility() {
+        try {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            Objects.requireNonNull(mainActivity).setHeaderVisibility(View.VISIBLE);
+        }
+        catch (Exception e){
+            Log.e(TAG, "changeHeaderVisibility: " +e );
+        }
     }
 
     private void initRecyclerView() {
