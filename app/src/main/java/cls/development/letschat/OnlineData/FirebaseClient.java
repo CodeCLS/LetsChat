@@ -7,6 +7,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import cls.development.letschat.FrontendManagement.ViewModel;
@@ -29,6 +32,7 @@ import cls.development.letschat.Room.Message;
 public class FirebaseClient {
     private static final String TAG = "FirebaseClient";
     private static final String CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES = "Messages";
+    private static final int MAX_LENGTH_HASH = 10;
     public static FirebaseClient firebaseClient;
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
@@ -123,5 +127,20 @@ public class FirebaseClient {
 
     }
 
+
+    public void startNewChat(Chat chat, String uid,String ownId, OnFailureListener onFailureListener,  OnSuccessListener onSuccessListener) {
+        DatabaseReference chatReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES);
+        chatReference.child(String.valueOf(chat.getId())).setValue(chat.getId());
+        Task<Void> taskCreatingChat = chatReference.child(uid).child("Chats").child(chat.getId()).setValue(chat.getId());
+        taskCreatingChat.addOnSuccessListener(onSuccessListener)
+        .addOnFailureListener(onFailureListener);
+        chatReference.child(ownId).child("Chats").child(chat.getId()).setValue(chat.getId());
+
+
+
+
+
+
+    }
 
 }

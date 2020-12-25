@@ -165,6 +165,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
 
     public void createChatFromDeepLink() {
         Uri uri = deepLink.getValue();
-        Chat chat =dataRepository.createChatFromDeepLink(uri);
+        dataRepository.createChatFromDeepLink(uri);
     }
 }
