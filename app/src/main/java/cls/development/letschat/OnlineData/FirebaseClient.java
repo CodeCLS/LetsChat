@@ -21,13 +21,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import cls.development.letschat.FrontendManagement.ViewModel;
+import cls.development.letschat.Interfaces.FirebaseClientCallback;
 import cls.development.letschat.Room.Chat;
 import cls.development.letschat.Room.Message;
 
 public class FirebaseClient {
     private static final String TAG = "FirebaseClient";
     private static final String CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES = "Messages";
-    public static FirebaseClient dataRepository;
+    public static FirebaseClient firebaseClient;
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
     private PhoneAuthOptions options;
@@ -35,9 +37,9 @@ public class FirebaseClient {
     private DatabaseReference databaseReference;
 
     public synchronized static FirebaseClient getInstance(){
-        if(dataRepository == null)
-            dataRepository= new FirebaseClient();
-        return dataRepository;
+        if(firebaseClient == null)
+            firebaseClient = new FirebaseClient();
+        return firebaseClient;
     }
 
     public FirebaseClient() {
@@ -95,11 +97,16 @@ public class FirebaseClient {
     private void addChatData(Message message, Chat chat, DatabaseReference chatReference) {
         chatReference.child(String.valueOf(chat.getId())).child(String.valueOf(message.getMessageId())).setValue(chat.getId());
     }
-    private ArrayList<Message> getAllMessages(Chat chat){
+    private void initGetAllMessagesFromFirebase(Chat chat,ViewModel viewModel){
         DatabaseReference chatReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES);
         chatReference.child(String.valueOf(chat.getId())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Message> array = new ArrayList<>();
+                FirebaseClientCallback firebaseClientCallback = (FirebaseClientCallback) viewModel;
+                firebaseClientCallback.chatChanged(chat,array);
+
+
 
 
             }
@@ -112,5 +119,9 @@ public class FirebaseClient {
 
 
     }
+    private void getAllChatsFromFirebase(){
+
+    }
+
 
 }

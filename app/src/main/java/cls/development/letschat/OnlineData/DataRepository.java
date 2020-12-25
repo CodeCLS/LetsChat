@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import com.google.firebase.auth.PhoneAuthProvider;
 
-public class DataRepository {
+public class DataRepository{
     public FirebaseClient firebaseClient;
     public static String ID;
     public static DataRepository dataRepository;
@@ -24,5 +24,6 @@ public class DataRepository {
     public void sendVerificationPhone(String number, Activity activity, PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks){
         firebaseClient.sendVerificationCode(number, activity,callbacks);
     }
+
 
 }

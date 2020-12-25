@@ -2,11 +2,13 @@ package cls.development.letschat.FrontendManagement;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,19 +21,26 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
+import cls.development.letschat.Fragments.ChatFragment;
 import cls.development.letschat.Fragments.LoginFragment;
+import cls.development.letschat.Interfaces.FirebaseClientCallback;
 import cls.development.letschat.Interfaces.LoginNumberCallback;
 import cls.development.letschat.OnlineData.DataRepository;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 import cls.development.letschat.Room.ChatRepository;
+import cls.development.letschat.Room.Message;
 
-public class ViewModel extends androidx.lifecycle.ViewModel {
+public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseClientCallback {
     private static final String TAG = "ViewModel";
     private MutableLiveData<Chat> selectedChat = new MutableLiveData<>();
     private MutableLiveData<String> uId = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Message>> arrayMessagesChat = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Chat>> arrayAllChats = new MutableLiveData<>();
+
     private DataRepository dataRepository;
     private ChatRepository chatRepository;
 
@@ -126,6 +135,20 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         Log.d(TAG, "enterCode:123123 "+credential);
         Log.d(TAG, "enterCode:1323123 "+credential.getProvider());
 
+
+
+    }
+
+
+    @Override
+    public void chatChanged(Chat chat, ArrayList<Message> messages) {
+        arrayMessagesChat.setValue(messages);
+
+    }
+
+    @Override
+    public void allChats(ArrayList<Chat> chats) {
+        arrayAllChats.setValue(chats);
 
     }
 }

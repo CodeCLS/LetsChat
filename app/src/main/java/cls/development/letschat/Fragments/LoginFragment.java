@@ -63,6 +63,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
     }
 
     private void init() {
+        numberVerificationSubmit();
         editTextInstagram = getView().findViewById(R.id.edit_instagram_login);
         editTelephoneNumber = getView().findViewById(R.id.edit_phone_login);
 

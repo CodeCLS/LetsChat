@@ -12,14 +12,22 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import cls.development.letschat.Adapter.ChatAdapter;
 import cls.development.letschat.R;
 import cls.development.letschat.FrontendManagement.ViewModel;
 import cls.development.letschat.FrontendManagement.ViewModelFactory;
+import cls.development.letschat.Room.Chat;
+import cls.development.letschat.Room.Message;
 
 public class ChatFragment extends Fragment {
     private RecyclerView recyclerView;
     private ViewModel viewModel;
+
+    public static void chatChanged(ArrayList<Message> messages, Chat chat) {
+
+    }
 
 
     @Nullable
