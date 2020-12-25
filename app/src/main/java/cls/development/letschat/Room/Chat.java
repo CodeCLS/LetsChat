@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Chat {
     private static final String TAG = "ChatModel";
     private boolean pinned;
+    private long id;
     private boolean favorite;
     private int color;
     private long createdDate;
@@ -19,7 +20,7 @@ public class Chat {
     private String unreadMessagesCount;
     private Drawable extraImage;
 
-    public Chat(boolean pinned, boolean favorite, int color, long createdDate, long instanceDate, ArrayList<Message> messageArrayList,String lastMessageContent,String unreadMessagesCount, Drawable extraImage) {
+    public Chat(long id,boolean pinned, boolean favorite, int color, long createdDate, long instanceDate, ArrayList<Message> messageArrayList,String lastMessageContent,String unreadMessagesCount, Drawable extraImage) {
         this.pinned = pinned;
         this.favorite = favorite;
         this.color = color;
@@ -29,6 +30,15 @@ public class Chat {
         this.lastMessageContent = lastMessageContent;
         this.unreadMessagesCount = unreadMessagesCount;
         this.extraImage = extraImage;
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Drawable getExtraImage() {

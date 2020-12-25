@@ -25,12 +25,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
-import java.util.Objects;
-
 import cls.development.letschat.CustomViews.NumberVerificationView;
 import cls.development.letschat.FrontendManagement.ViewModel;
 import cls.development.letschat.FrontendManagement.ViewModelFactory;
-import cls.development.letschat.LoginNumberCallback;
+import cls.development.letschat.Interfaces.LoginNumberCallback;
 import cls.development.letschat.R;
 
 public class LoginFragment extends androidx.fragment.app.Fragment implements LoginNumberCallback {
@@ -173,6 +171,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
     }
 
     private void transitionToAllChats() {
+        Log.d(TAG, "transitionToAllChats:2 ");
         AllChatsFragment allChatsFragment = new AllChatsFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

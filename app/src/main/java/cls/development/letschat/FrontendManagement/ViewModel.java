@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.Request;
@@ -23,7 +22,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.Objects;
 
 import cls.development.letschat.Fragments.LoginFragment;
-import cls.development.letschat.LoginNumberCallback;
+import cls.development.letschat.Interfaces.LoginNumberCallback;
 import cls.development.letschat.OnlineData.DataRepository;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;

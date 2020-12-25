@@ -2,7 +2,6 @@ package cls.development.letschat.Adapter;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import cls.development.letschat.AdapterCallbackFragment;
+import cls.development.letschat.Interfaces.AdapterCallbackFragment;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 

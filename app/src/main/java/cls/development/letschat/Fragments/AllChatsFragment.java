@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import cls.development.letschat.Adapter.MainAdapterChats;
-import cls.development.letschat.AdapterCallbackFragment;
+import cls.development.letschat.Interfaces.AdapterCallbackFragment;
 import cls.development.letschat.MainActivity;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;

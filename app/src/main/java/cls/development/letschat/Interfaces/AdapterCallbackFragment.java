@@ -1,4 +1,4 @@
-package cls.development.letschat;
+package cls.development.letschat.Interfaces;
 
 import cls.development.letschat.Room.Chat;
 
