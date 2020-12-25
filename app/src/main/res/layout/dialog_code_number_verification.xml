@@ -47,6 +47,7 @@
 
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/login_verification_edit_btn_edit"
             android:textColorLink="@color/white"
             android:layout_width="match_parent"
             android:maxLength="30"

@@ -6,4 +6,7 @@
     <string name="code_txt">Code</string>
     <string name="instagram_test_tag">@CodingCaleb</string>
     <string name="wrong_insta">It seems that this instagram user doesn\'t exist. Please change it</string>
+    <string name="wrong_credentials">Please enter your credentials into the fields. Empty fields are not allowed.</string>
+    <string name="code_sent">The verification Code was sent.</string>
+    <string name="wrong_code">Entered wrong code</string>
 </resources>

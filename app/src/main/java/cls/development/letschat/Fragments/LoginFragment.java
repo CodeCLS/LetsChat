@@ -21,19 +21,25 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.transition.Fade;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.PhoneAuthProvider;
+
+import java.util.Objects;
+
 import cls.development.letschat.CustomViews.NumberVerificationView;
 import cls.development.letschat.FrontendManagement.ViewModel;
 import cls.development.letschat.FrontendManagement.ViewModelFactory;
+import cls.development.letschat.LoginNumberCallback;
 import cls.development.letschat.R;
 
-public class LoginFragment extends androidx.fragment.app.Fragment {
+public class LoginFragment extends androidx.fragment.app.Fragment implements LoginNumberCallback {
     private static final String TAG = "LoginFragment" ;
     private static final long CONSTANT_ANIMATION_DIALOG_DURATION = 100;
     private LinearLayout editTextInstagramLinear;
     private EditText editTextInstagram;
 
 
-    private EditText telephoneNumber;
+    private EditText editTelephoneNumber;
     private LinearLayout telephoneNumberLinear;
 
 
@@ -58,22 +64,33 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
     }
 
     private void init() {
+        editTextInstagram = getView().findViewById(R.id.edit_instagram_login);
+        editTelephoneNumber = getView().findViewById(R.id.edit_phone_login);
 
         darkBackground = getView().findViewById(R.id.darkened_background_login);
         verificationContainer = getView().findViewById(R.id.verification_Container_Login);
         continueButton = getView().findViewById(R.id.login_linearlayout_btn_container);
         backgroundContainer = getView().findViewById(R.id.background_container_login);
-        verificationContainer.initFromFragment(this);
+        LoginFragment loginFragment = this;
 
         //onPress();
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.signUpWithInstaAndNumber("+4917641025403" , "calebseeling" ,getActivity(),getContext(),getView() );
+                if(editTextInstagram.getText().toString().isEmpty() ||
+                        editTextInstagram.getText().toString().equals("") ||
+                        editTelephoneNumber.getText().toString().isEmpty() ||
+                        editTelephoneNumber.getText().toString().length() < 6){
+                    Snackbar.make(getView(),R.string.wrong_credentials,Snackbar.LENGTH_SHORT).show();
+
+                }
+                else{
+                    viewModel.signUpWithInstaAndNumber("+4917641025403" , "calebseeling" ,getActivity(),getContext(),getView(),loginFragment );
+
+                }
 
 
 
-                createDialogCode();
                 //transitionToMain();
 
             }
@@ -82,7 +99,8 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
 
     }
 
-    private void createDialogCode() {
+    private void createDialogCode(PhoneAuthProvider.ForceResendingToken token, String verification) {
+        verificationContainer.initFromFragment(this,token,verification);
         verificationContainer.setVisibility(View.VISIBLE);
         darkBackground.setVisibility(View.VISIBLE);
 
@@ -95,6 +113,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
 
             }
         });
+
 
 
 
@@ -173,6 +192,23 @@ public class LoginFragment extends androidx.fragment.app.Fragment {
 
     public void numberVerificationSubmit() {
         transitionToAllChats();
+
+    }
+
+    @Override
+    public void openDialogPhoneVerification(PhoneAuthProvider.ForceResendingToken token, String verificationId) {
+        createDialogCode(token,verificationId);
+
+    }
+
+    public void checkCode(String code, String verification) {
+        boolean returnValue = viewModel.enterCode(code,verification);
+        if (returnValue){
+            numberVerificationSubmit();
+        }
+        else{
+            Snackbar.make(Objects.requireNonNull(getView()),R.string.wrong_code,Snackbar.LENGTH_SHORT).show();
+        }
 
     }
 }

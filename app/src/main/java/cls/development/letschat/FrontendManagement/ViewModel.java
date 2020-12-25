@@ -20,6 +20,8 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import cls.development.letschat.Fragments.LoginFragment;
+import cls.development.letschat.LoginNumberCallback;
 import cls.development.letschat.OnlineData.DataRepository;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
@@ -53,13 +55,12 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     public void setuId(String uId) {
         this.uId.setValue(uId);
     }
-    public void signUpWithInstaAndNumber(String number, String insta, Activity activity, Context context, View view){
-        callBackVerification(number, activity);
-        httpCallInsta("https://instagram.com/" + insta + "/",context,view);
+    public void signUpWithInstaAndNumber(String number, String insta, Activity activity, Context context, View view, LoginFragment loginFragment){
+        httpCallInsta("https://instagram.com/" + insta + "/",context,view,activity,number,loginFragment);
 
 
     }
-    public void httpCallInsta(String url, Context context, View view) {
+    public void httpCallInsta(String url, Context context, View view, Activity activity, String number, LoginFragment loginFragment) {
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -68,6 +69,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + response);
+                        callBackVerification(number, activity,loginFragment,view);
+
                         // enjoy your response
                     }
                 }, new Response.ErrorListener() {
@@ -83,10 +86,12 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         queue.add(stringRequest);
     }
 
-    private void callBackVerification(String number, Activity activity) {
+    private void callBackVerification(String number, Activity activity, LoginFragment loginFragment,View view) {
         dataRepository.sendVerificationPhone(number, activity, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                LoginNumberCallback loginNumberCallback = (LoginNumberCallback) loginFragment;
+
                 Log.d(TAG, "onVerificationCompleted: " + phoneAuthCredential.getProvider());
 
             }
@@ -101,9 +106,16 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             public void onCodeSent(@NonNull String verificationId,
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent: " + token + " " + verificationId);
+                LoginNumberCallback loginNumberCallback =(LoginNumberCallback) loginFragment;
+                loginNumberCallback.openDialogPhoneVerification(token,verificationId);
+                Snackbar.make(view,R.string.code_sent, Snackbar.LENGTH_SHORT).show();
 
             }
 
         });
+    }
+    public void enterCode(String code,String verificationId){
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+
     }
 }

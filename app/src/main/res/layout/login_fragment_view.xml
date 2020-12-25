@@ -83,6 +83,7 @@
             android:autoSizeTextType="uniform"
             tools:targetApi="o" />
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_instagram_login"
             android:textColorLink="@color/white"
             android:layout_width="match_parent"
             android:textColor="@color/white"
@@ -124,6 +125,8 @@
 
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_phone_login"
+
             android:textColorLink="@color/white"
             android:layout_width="match_parent"
             android:maxLength="30"
