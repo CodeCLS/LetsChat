@@ -1,15 +1,27 @@
 package cls.development.letschat;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 
 import cls.development.letschat.CustomViews.HeaderView;
 import cls.development.letschat.Fragments.LoginFragment;
@@ -19,16 +31,14 @@ import cls.development.letschat.FrontendManagement.ViewModelFactory;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Main";
     private ViewModel viewModel;
+    Uri deepLink = null;
     public HeaderView headerView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ViewModelFactory viewModelFactory = new ViewModelFactory();
-        viewModel = new ViewModelProvider(this,viewModelFactory).get(ViewModel.class);
 
         initViews();
-        transitionToFragment(new LoginFragment());
     }
 
     private void initViews() {
@@ -44,6 +54,47 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.mainFrame, fragment , "LoginFragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+
+    }
+    private void deepLinkWork() {
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                    @Override
+                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                        if (pendingDynamicLinkData != null) {
+                            deepLink = pendingDynamicLinkData.getLink();
+                            viewModel.setDeepLink(deepLink);
+                            viewModel.createChatFromDeepLink();
+
+                            LoginFragment loginFragment = new LoginFragment();
+                            transitionToFragment(loginFragment);
+
+                        }
+
+
+
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "getDynamicLink:onFailure", e);
+                    }
+                });
+    }
+
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ViewModelFactory viewModelFactory = new ViewModelFactory();
+        viewModel = new ViewModelProvider(this,viewModelFactory).get(ViewModel.class);
+
+        deepLinkWork();
 
 
     }

@@ -153,7 +153,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
                         Log.d(TAG, "onTouchend: " + millis_end);
 
                         if(millis_end-millis_start < 200){
-                            transitionToAllChats();
+                            transitionToRespectiveFragment();
                         }
                     case MotionEvent.ACTION_UP:
                         long millis_end_2 = System.currentTimeMillis();
@@ -171,7 +171,8 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
         });
     }
 
-    private void transitionToAllChats() {
+    private void transitionToRespectiveFragment() {
+
         Log.d(TAG, "transitionToAllChats:2 ");
         AllChatsFragment allChatsFragment = new AllChatsFragment();
         FragmentManager fragmentManager = getFragmentManager();
@@ -192,7 +193,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
     }
 
     public void numberVerificationSubmit() {
-        transitionToAllChats();
+        transitionToRespectiveFragment();
 
     }
 
@@ -211,4 +212,6 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
     public void checkCode(String code, String verification) {
         viewModel.enterCode(code,verification);
     }
+
+
 }

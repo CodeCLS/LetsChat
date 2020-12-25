@@ -3,6 +3,7 @@ package cls.development.letschat.FrontendManagement;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -40,6 +41,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     private MutableLiveData<String> uId = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Message>> arrayMessagesChat = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Chat>> arrayAllChats = new MutableLiveData<>();
+    private MutableLiveData<Uri> deepLink = new MutableLiveData<>();
+
 
     private DataRepository dataRepository;
     private ChatRepository chatRepository;
@@ -47,6 +50,14 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     public ViewModel() {
         dataRepository = DataRepository.getInstance();
         chatRepository = ChatRepository.getInstance();
+    }
+
+    public Uri getDeepLink() {
+        return deepLink.getValue();
+    }
+
+    public void setDeepLink(Uri deepLink) {
+        this.deepLink.setValue(deepLink);
     }
 
     public Chat getSelectedChat() {
@@ -150,5 +161,10 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     public void allChats(ArrayList<Chat> chats) {
         arrayAllChats.setValue(chats);
 
+    }
+
+    public void createChatFromDeepLink() {
+        Uri uri = deepLink.getValue();
+        Chat chat =dataRepository.createChatFromDeepLink(uri);
     }
 }

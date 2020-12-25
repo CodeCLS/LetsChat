@@ -33,6 +33,9 @@ public class Chat {
         this.id = id;
     }
 
+    public Chat() {
+    }
+
     public long getId() {
         return id;
     }
