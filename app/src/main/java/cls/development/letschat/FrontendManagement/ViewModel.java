@@ -20,6 +20,8 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.Objects;
+
 import cls.development.letschat.Fragments.LoginFragment;
 import cls.development.letschat.LoginNumberCallback;
 import cls.development.letschat.OnlineData.DataRepository;
@@ -91,6 +93,9 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                 LoginNumberCallback loginNumberCallback = (LoginNumberCallback) loginFragment;
+                Snackbar.make(Objects.requireNonNull(view),R.string.succesfully_verified,Snackbar.LENGTH_SHORT).show();
+                loginNumberCallback.successfullyVerified(phoneAuthCredential);
+
 
                 Log.d(TAG, "onVerificationCompleted: " + phoneAuthCredential.getProvider());
 
@@ -99,6 +104,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 Log.d(TAG, "onVerificationFailed: " + e);
+                Snackbar.make(Objects.requireNonNull(view),(R.string.verification_error) + e.getLocalizedMessage(),Snackbar.LENGTH_SHORT).show();
+
 
 
             }
@@ -115,7 +122,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         });
     }
     public void enterCode(String code,String verificationId){
+        Log.d(TAG, "enterCode:123123 ");
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+        Log.d(TAG, "enterCode:123123 "+credential);
+        Log.d(TAG, "enterCode:1323123 "+credential.getProvider());
+
 
     }
 }

@@ -9,4 +9,6 @@
     <string name="wrong_credentials">Please enter your credentials into the fields. Empty fields are not allowed.</string>
     <string name="code_sent">The verification Code was sent.</string>
     <string name="wrong_code">Entered wrong code</string>
+    <string name="succesfully_verified">Nice, you did it! Have fun chatting with your anonymous friends</string>
+    <string name="verification_error">"Mmh. Something went wrong. Error: "</string>
 </resources>

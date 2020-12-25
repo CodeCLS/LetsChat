@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.transition.Fade;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.Objects;
@@ -201,14 +202,13 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
 
     }
 
-    public void checkCode(String code, String verification) {
-        boolean returnValue = viewModel.enterCode(code,verification);
-        if (returnValue){
-            numberVerificationSubmit();
-        }
-        else{
-            Snackbar.make(Objects.requireNonNull(getView()),R.string.wrong_code,Snackbar.LENGTH_SHORT).show();
-        }
+    @Override
+    public void successfullyVerified(PhoneAuthCredential credential) {
+        numberVerificationSubmit();
 
+    }
+
+    public void checkCode(String code, String verification) {
+        viewModel.enterCode(code,verification);
     }
 }
