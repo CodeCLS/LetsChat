@@ -67,6 +67,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         this.context.setValue(context);
         dataRepository = DataRepository.getInstance(context);
         chatRepository = ChatRepository.getInstance();
+        dataRepository.getAllChats(this);
         startCheckUp();
 
     }
@@ -296,6 +297,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     @Override
     public void allChats(ArrayList<Chat> chats) {
         arrayAllChats.setValue(chats);
+        Log.d(TAG, "allChats: "+arrayAllChats.getValue());
 
     }
 

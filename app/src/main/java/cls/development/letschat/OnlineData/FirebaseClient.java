@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import cls.development.letschat.Fragments.LoginFragment;
@@ -41,6 +42,9 @@ public class FirebaseClient {
     private static final String CONSTANT_STRING_INSTAGRAM_HANDEL = "Insta";
     private static final String CONSTANT_STRING_NUMBER_HANDEL = "Number";
     private static final String CONSTANT_STRING_FIREBASE_CHAT_LIST = "UserChats";
+    private static final String CONSTANT_CHAT_CREATED_FIRE = "Created";
+    private static final String CONSTANT_CHAT_ID_FIRE = "id";
+    private static final long CONSTANT_MILLIS_DAY = 86400000;
     public static FirebaseClient firebaseClient;
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
@@ -174,4 +178,34 @@ public class FirebaseClient {
 
     }
 
+    public void getAllChats(ViewModel viewModel) {
+
+        DatabaseReference userReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER).child(getUid()).child(CONSTANT_STRING_FIREBASE_CHAT_LIST);
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Chat> chats = new ArrayList<>();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    if (Long.parseLong(Objects.requireNonNull(dataSnapshot.child(CONSTANT_CHAT_CREATED_FIRE).getValue()).toString()) +CONSTANT_MILLIS_DAY> System.currentTimeMillis() )
+                        dataSnapshot. getRef().removeValue();
+                    else {
+                        Chat chat = new Chat();
+                        chat.setCreatedDate(Long.parseLong(Objects.requireNonNull(dataSnapshot.child(CONSTANT_CHAT_CREATED_FIRE).getValue()).toString()));
+                        chat.setId(Objects.requireNonNull(dataSnapshot.child(CONSTANT_CHAT_ID_FIRE).getValue()).toString());
+                        chats.add(chat);
+                    }
+                }
+                ((FirebaseClientCallback) viewModel).allChats(chats);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
 }

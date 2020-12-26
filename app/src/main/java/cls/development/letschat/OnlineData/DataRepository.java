@@ -27,6 +27,7 @@ import java.net.URLEncoder;
 import java.util.Random;
 
 import cls.development.letschat.Fragments.LoginFragment;
+import cls.development.letschat.FrontendManagement.ViewModel;
 import cls.development.letschat.Interfaces.LoginNumberCallback;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
@@ -174,5 +175,9 @@ public class DataRepository{
         sharedEdit.putString(CONSTANT_SHARED_ID_NAME, firebaseUid);
         sharedEdit.apply();
 
+    }
+
+    public void getAllChats(ViewModel viewModel) {
+        firebaseClient.getAllChats(viewModel);
     }
 }
