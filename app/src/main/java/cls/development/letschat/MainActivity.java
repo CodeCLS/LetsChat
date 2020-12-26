@@ -40,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViews();
+
         activityStartUp();
 
 
-        initViews();
     }
 
     private void initViews() {
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             headerView.setVisibility(View.GONE);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mainFrame, fragment , "LoginFragment");
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
@@ -101,19 +102,34 @@ public class MainActivity extends AppCompatActivity {
     private void activityStartUp() {
         ViewModelFactory viewModelFactory = new ViewModelFactory();
         viewModel = new ViewModelProvider(this,viewModelFactory).get(ViewModel.class);
-        try {
-            viewModel.initViewModelInActivity(this,this);
-            deepLinkWork();
-            AllChatsFragment allChatsFragment = new AllChatsFragment();
-            transitionToFragment(allChatsFragment);
+        deepLinkWork();
+        boolean error = true;
 
+        try {
+            viewModel.initViewModelInActivity(this);
+            error = false;
         } catch (Exception e) {
-            //Snackbar.make(findViewById(R.id.mainFrame),"Error: " +e,Snackbar.LENGTH_SHORT).show();
-            LoginFragment allChatsFragment = new LoginFragment();
+            e.printStackTrace();
+            error = true;
+        }
+        if (error){
+            Log.d(TAG, "activityStartUp: " + error);
+
+            LoginFragment loginFragment = new LoginFragment();
+            transitionToFragment(loginFragment);
+
+        }
+        else {
+            Log.d(TAG, "activitySt12artUp: " + error);
+
+            AllChatsFragment allChatsFragment = new AllChatsFragment();
             transitionToFragment(allChatsFragment);
 
 
         }
+
+
+
     }
 
     public void setHeaderVisibility(int visibility){

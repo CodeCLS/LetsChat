@@ -55,6 +55,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreated:12321 ");
         ViewModelFactory viewModelFactory = new ViewModelFactory();
         viewModel = new ViewModelProvider(requireActivity(),viewModelFactory).get(ViewModel.class);
 
@@ -63,7 +64,6 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
     }
 
     private void init() {
-        numberVerificationSubmit();
         editTextInstagram = getView().findViewById(R.id.edit_instagram_login);
         editTelephoneNumber = getView().findViewById(R.id.edit_phone_login);
 

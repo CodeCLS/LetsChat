@@ -58,34 +58,44 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     public ViewModel() {
 
     }
-    public void initViewModelInActivity(Context context,AppCompatActivity appCompatActivity) throws Exception {
+    public void initViewModelInActivity(Context context) throws Exception {
         this.context.setValue(context);
         dataRepository = DataRepository.getInstance(context);
         chatRepository = ChatRepository.getInstance();
-        startCheckUp(appCompatActivity);
+        startCheckUp();
 
     }
 
-    private void startCheckUp(AppCompatActivity owner) throws Exception {
-        if (isConnected() && dataRepository.getFirebaseUid() == null){
-            throw new Exception(getContext().getString(R.string.connected_but_no_id));
+    private void startCheckUp() throws Exception {
+        Log.d(TAG, "startCheckUp1212333123: " + isConnected() + " " + dataRepository.getFirebaseUid() + " " + dataRepository.getUIDShared());
+
+        if (isConnected()){
+            if (dataRepository.getFirebaseUid() == null){
+                throw new Exception(getContext().getString(R.string.connected_but_no_id));
+
+
+            }
+            else{
+                uId.setValue(dataRepository.getFirebaseUid());
+                setIsConnected(true);
+
+            }
 
         }
-        else if(isConnected()&&dataRepository.getFirebaseUid() != null){
-            uId.setValue(dataRepository.getFirebaseUid());
-            setIsConnected(true);
-            //doOnlineWork();
+        else{
+            if (dataRepository.getUIDShared() == null){
+                throw new Exception(getContext().getString(R.string.not_connected_and_no_room_uid));
 
-            return;
-        }
-        if (!isConnected() && dataRepository.getUIDShared() == null)
-            throw new Exception(getContext().getString(R.string.not_connected_and_no_room_uid));
-        else if(!isConnected() && dataRepository.getUIDShared() != null){
-            uId.setValue(dataRepository.getUIDShared());
-            setIsConnected(false);
 
-            //doOfflineWork(owner);
+            }
+            else{
+                uId.setValue(dataRepository.getUIDShared());
+                setIsConnected(false);
+
+            }
         }
+        throw new Exception("nothing called");
+
 
     }
 
@@ -188,9 +198,9 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         dataRepository.sendVerificationPhone(number, activity, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                LoginNumberCallback loginNumberCallback = (LoginNumberCallback) loginFragment;
                 Snackbar.make(Objects.requireNonNull(view),R.string.succesfully_verified,Snackbar.LENGTH_SHORT).show();
-                loginNumberCallback.successfullyVerified(phoneAuthCredential);
+                backendWorkNewUser(loginFragment);
+
 
 
                 Log.d(TAG, "onVerificationCompleted: " + phoneAuthCredential.getProvider());
@@ -217,6 +227,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
 
         });
     }
+
+    private void backendWorkNewUser(LoginFragment loginFragment) {
+        dataRepository.createNewUser(loginFragment);
+    }
+
     public void enterCode(String code,String verificationId){
         Log.d(TAG, "enterCode:123123 ");
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);

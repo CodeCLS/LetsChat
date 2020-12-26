@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
@@ -23,6 +24,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Random;
 
+import cls.development.letschat.Fragments.LoginFragment;
+import cls.development.letschat.Interfaces.LoginNumberCallback;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 import cls.development.letschat.Room.ChatDao;
@@ -148,6 +151,12 @@ public class DataRepository{
 
     public String getUIDShared() {
         return sharedPreferences.getString("uid" , null);
+
+
+    }
+
+    public void createNewUser(LoginFragment loginFragment, PhoneAuthCredential phoneAuthCredential) {
+        firebaseClient.createNewUser(loginFragment,phoneAuthCredential);
 
 
     }

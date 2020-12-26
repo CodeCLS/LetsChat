@@ -5,13 +5,17 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
@@ -21,11 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import cls.development.letschat.Fragments.LoginFragment;
 import cls.development.letschat.FrontendManagement.ViewModel;
 import cls.development.letschat.Interfaces.FirebaseClientCallback;
+import cls.development.letschat.Interfaces.LoginNumberCallback;
 import cls.development.letschat.Room.Chat;
 import cls.development.letschat.Room.Message;
 
@@ -39,6 +44,7 @@ public class FirebaseClient {
     private PhoneAuthOptions options;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private static final String CONSTANT_STRING_FIREBASE_REALTIME_USER = "User";
 
     public synchronized static FirebaseClient getInstance(){
         if(firebaseClient == null)
@@ -55,17 +61,16 @@ public class FirebaseClient {
         try {
             this.mAuth = FirebaseAuth.getInstance();
             this.firebaseUser = mAuth.getCurrentUser();
-            this.firebaseDatabase =  FirebaseDatabase.getInstance();
+            this.firebaseDatabase = FirebaseDatabase.getInstance();
             this.databaseReference = firebaseDatabase.getReference();
-        }
-        catch (Exception e){
-            Log.e(TAG, "initError: "  + e);
+        } catch (Exception e) {
+            Log.e(TAG, "initError: " + e);
 
         }
     }
-
     public String getUid() {
-        return mAuth.getUid();
+
+        return mAuth.getCurrentUser().getUid();
 
     }
     public boolean currentlyLoggedIn(){
@@ -143,4 +148,19 @@ public class FirebaseClient {
 
     }
 
+    public void createNewUser(LoginFragment loginFragment, PhoneAuthCredential phoneAuthCredential,OnCompleteListener<AuthResult> onCompleteListener,String insta,String number) {
+        signInWithPhoneAuthCredential(phoneAuthCredential,onCompleteListener);
+
+    }
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential,OnCompleteListener<AuthResult> onCompleteListener) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(onCompleteListener);
+    }
+
+    public void addUserToRealTime(String insta,String number,OnSuccessListener<Void> onSuccessListener) {
+        DatabaseReference chatReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER);
+        Task<Void> taskCreateUser = chatReference.child(getUid()).setValue(getUid());
+        taskCreateUser.addOnSuccessListener(onSuccessListener);
+        LoginNumberCallback loginNumberCallback = (LoginNumberCallback) loginFragment;
+    }
 }
