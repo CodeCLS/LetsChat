@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 
@@ -93,8 +94,16 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         ViewModelFactory viewModelFactory = new ViewModelFactory();
         viewModel = new ViewModelProvider(this,viewModelFactory).get(ViewModel.class);
+        try {
+            viewModel.initViewModelInActivity(this,this);
+            deepLinkWork();
 
-        deepLinkWork();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Snackbar.make(getCurrentFocus(),"Error: " +e,Snackbar.LENGTH_SHORT).show();
+
+        }
+
 
 
     }

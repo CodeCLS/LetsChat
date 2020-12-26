@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +26,7 @@ import java.util.Objects;
 import cls.development.letschat.Adapter.MainAdapterChats;
 import cls.development.letschat.Interfaces.AdapterCallbackFragment;
 import cls.development.letschat.MainActivity;
+import cls.development.letschat.OnlineData.DataRepository;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 import cls.development.letschat.Room.Message;
@@ -79,11 +81,13 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
         recyclerView = getView().findViewById(R.id.recyclerview_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Message> arrayPlaceHolder = new ArrayList<>();
+        ArrayList<Chat> array = new ArrayList<>();
 
-        if (viewModel.getDeepLink()!= null){
+        if (viewModel.getDeepLink()!= null)
 
-        }
-        //array.add(new Chat(false,false, ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.secondary),1230812,379187239,arrayPlaceHolder,"Hello","2",null));
+
+
+        array.add(new Chat("asd",false,false, ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.secondary),1230812,379187239,arrayPlaceHolder,"Hello","2",null));
         adapterChats = new MainAdapterChats(array,this);
         recyclerView.setAdapter(adapterChats);
 

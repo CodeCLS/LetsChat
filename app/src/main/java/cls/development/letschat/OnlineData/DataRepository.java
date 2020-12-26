@@ -3,6 +3,7 @@ package cls.development.letschat.OnlineData;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 
@@ -24,6 +25,8 @@ import java.util.Random;
 
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
+import cls.development.letschat.Room.ChatDao;
+import cls.development.letschat.Room.ChatRepository;
 
 public class DataRepository{
     private static final String CONSTANT_DEEPLINK_AUTHORITY = "letschat.cls-development.com";
@@ -33,17 +36,23 @@ public class DataRepository{
     private static final String TAG = "DataRepository";
     private static final String CONSTANT_DOMAIN_URI_PREFIX = "letschat.cls-development.com";
     private static final int MAX_LENGTH_HASH = 10;
+    private static final String CONSTANT_SHARED_NAME = "LetsChatApp";
+    private final Context context;
     public FirebaseClient firebaseClient;
+    private SharedPreferences sharedPreferences;
     public static String ID;
     public static DataRepository dataRepository;
-    public synchronized static DataRepository getInstance(){
+    public synchronized static DataRepository getInstance(Context context){
         if(dataRepository == null)
-            dataRepository= new DataRepository();
+            dataRepository= new DataRepository(context);
         return dataRepository;
     }
 
-    public DataRepository() {
+    public DataRepository(Context context) {
+        this.context=context;
         firebaseClient = FirebaseClient.getInstance();
+        sharedPreferences = context.getSharedPreferences(CONSTANT_SHARED_NAME,Context.MODE_PRIVATE);
+
     }
 
     public String getFirebaseUid(){
@@ -54,12 +63,12 @@ public class DataRepository{
     }
 
 
-    public void createChatFromDeepLink(Uri uri) {
+    public void createChatFromDeepLink(Uri uri, OnSuccessListener onsuccess , OnFailureListener onfailure,String ownId) {
         Chat chat = new Chat();
         chat.setCreatedDate(System.currentTimeMillis());
         chat.setId(random());
         String uid = uri.getQueryParameter(CONSTANT_ID_STRING_DEEPLINK);
-        firebaseClient.startNewChat(chat,uid);
+        firebaseClient.startNewChat(chat,uid,ownId,onfailure, onsuccess);
     }
     public static String random() {
         Random generator = new Random();
@@ -133,6 +142,12 @@ public class DataRepository{
 
 
 
+
+
+    }
+
+    public String getUIDShared() {
+        return sharedPreferences.getString("uid" , null);
 
 
     }

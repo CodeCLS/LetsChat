@@ -10,4 +10,8 @@ public class ChatRepository {
             chatRepository= new ChatRepository();
         return chatRepository;
     }
+
+    public void getRoomUID() {
+
+    }
 }

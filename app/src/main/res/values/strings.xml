@@ -11,4 +11,8 @@
     <string name="wrong_code">Entered wrong code</string>
     <string name="succesfully_verified">Nice, you did it! Have fun chatting with your anonymous friends</string>
     <string name="verification_error">"Mmh. Something went wrong. Error: "</string>
+    <string name="created_chat_from_deeplink">Nice! You can chat now anonymously with your friend</string>
+    <string name="connected_but_no_id">Connected to internet but not uid</string>
+    <string name="not_connected_and_no_room_uid">User isn\'t connected and doesn\'t have a room uid.</string>
+    <string name="back_online_offline_again">You are back</string>
 </resources>
