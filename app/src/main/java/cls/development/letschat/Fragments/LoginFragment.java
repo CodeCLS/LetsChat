@@ -88,9 +88,9 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
 
                 }
                 else{
-                    viewModel.setInsta(editTextInstagram.getText().toString());
-                    viewModel.setPhone(editTelephoneNumber.getText().toString());
-                    viewModel.signUpWithInstaAndNumber(editTelephoneNumber.getText().toString().trim() , editTextInstagram.getText().toString() ,getActivity(),getContext(),getView(),loginFragment );
+                    viewModel.setInsta(editTextInstagram.getText().toString().trim());
+                    viewModel.setPhone(editTelephoneNumber.getText().toString().trim());
+                    viewModel.signUpWithInstaAndNumber(editTelephoneNumber.getText().toString().trim() , editTextInstagram.getText().toString().trim() ,getActivity(),getContext(),getView(),loginFragment );
 
                 }
 

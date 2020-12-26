@@ -162,8 +162,8 @@ public class DataRepository{
 
 
     }
-    public void createNewUserInRealtimeDB(String insta, String number,OnSuccessListener<Void> onSuccesListener) {
-        firebaseClient.addUserToRealTime(insta,number,onSuccesListener);
+    public void createNewUserInRealtimeDB(String insta, String number,OnCompleteListener<Void> onCompleteListener) {
+        firebaseClient.addUserToRealTime(insta,number,onCompleteListener);
 
 
     }

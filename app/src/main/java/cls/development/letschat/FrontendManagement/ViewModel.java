@@ -239,21 +239,35 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "onComplete:123123123 ");
-                dataRepository.createNewUserInRealtimeDB(insta, number, new OnSuccessListener<Void>() {
+                dataRepository.createNewUserInRealtimeDB(insta, number, new OnCompleteListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "ent123erCode:12321 ");
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "onComplete:12213123 ");
+                        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "ent123erCode:12321 ");
 
-                        ((LoginNumberCallback) loginFragment).successfullyVerified(phoneAuthCredential);
-                        Snackbar.make(Objects.requireNonNull(view),R.string.succesfully_verified,Snackbar.LENGTH_SHORT).show();
+                                ((LoginNumberCallback) loginFragment).successfullyVerified(phoneAuthCredential);
+                                Snackbar.make(Objects.requireNonNull(view),R.string.succesfully_verified,Snackbar.LENGTH_SHORT).show();
 
+                            }
+                        });
+                        task.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "ent12123erCode:12321 ");
+
+                            }
+                        });
 
                     }
                 });
-
-
             }
         });
+
+
+
     }
 
     public void enterCode(LoginFragment loginFragment,String insta,String number,View view,String code,String verificationId){

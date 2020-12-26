@@ -73,7 +73,7 @@ public class FirebaseClient {
     }
     public String getUid() {
 
-        return mAuth.getCurrentUser().getUid();
+        return firebaseUser.getUid();
 
     }
     public boolean currentlyLoggedIn(){
@@ -161,13 +161,15 @@ public class FirebaseClient {
                 .addOnCompleteListener(onCompleteListener);
     }
 
-    public void addUserToRealTime(String insta, String number,OnSuccessListener<Void> onSuccessListener) {
+    public void addUserToRealTime(String insta, String number,OnCompleteListener<Void> onCompleteListener) {
+        Log.d(TAG, "addUserToRealTime123123: ");
         DatabaseReference userReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER);
         Task<Void> taskCreateUser = userReference.child(getUid()).setValue(getUid());
-        taskCreateUser.addOnSuccessListener(onSuccessListener);
         userReference.child(getUid()).child(CONSTANT_STRING_INSTAGRAM_HANDEL).setValue(insta);
-        userReference.child(getUid()).child(CONSTANT_STRING_NUMBER_HANDEL).setValue(insta);
+        userReference.child(getUid()).child(CONSTANT_STRING_NUMBER_HANDEL).setValue(number);
         userReference.child(getUid()).child(CONSTANT_STRING_FIREBASE_CHAT_LIST).setValue(CONSTANT_STRING_FIREBASE_CHAT_LIST);
+
+        taskCreateUser.addOnCompleteListener(onCompleteListener);
 
 
     }

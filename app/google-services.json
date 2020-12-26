@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "599009893167",
+    "firebase_url": "https://letschat-2e8ac-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "letschat-2e8ac",
     "storage_bucket": "letschat-2e8ac.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "599009893167-67r7m0p7onoi3vehfas5e13cgmg5r2hl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cls.development.letschat",
+            "certificate_hash": "b5d080a2eab18e854442b701bfbd7e8819ac5fbd"
+          }
+        },
         {
           "client_id": "599009893167-pupcnbsmplit37tjjevff9she8ni4ec6.apps.googleusercontent.com",
           "client_type": 3
