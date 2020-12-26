@@ -39,7 +39,6 @@ import cls.development.letschat.Room.Message;
 
 public class FirebaseClient {
     private static final String TAG = "FirebaseClient";
-    private static final String CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES = "Messages";
     private static final int MAX_LENGTH_HASH = 10;
     private static final String CONSTANT_STRING_INSTAGRAM_HANDEL = "Insta";
     private static final String CONSTANT_STRING_NUMBER_HANDEL = "Number";
@@ -81,7 +80,7 @@ public class FirebaseClient {
     }
     public String getUid() {
 
-        return firebaseUser.getUid();
+        return mAuth.getCurrentUser().getUid();
 
     }
     public boolean currentlyLoggedIn(){
@@ -99,7 +98,7 @@ public class FirebaseClient {
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
     public boolean sendMessage(Message message, Chat chat, Context context){
-        DatabaseReference chatReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES);
+        DatabaseReference chatReference = databaseReference.child(CONSTANT_FIRE_CHAT);
         Task<Void> databaseReference = chatReference.child(String.valueOf(chat.getId())).setValue(chat.getId());
         databaseReference.addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -118,7 +117,7 @@ public class FirebaseClient {
         chatReference.child(String.valueOf(chat.getId())).child(String.valueOf(message.getMessageId())).setValue(chat.getId());
     }
     private void initGetAllMessagesFromFirebase(Chat chat,ViewModel viewModel){
-        DatabaseReference chatReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES);
+        DatabaseReference chatReference = databaseReference.child(CONSTANT_FIRE_CHAT);
         chatReference.child(String.valueOf(chat.getId())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -145,12 +144,13 @@ public class FirebaseClient {
 
 
     public void startNewChat(Chat chat, String uid,String ownId, OnFailureListener onFailureListener,  OnSuccessListener onSuccessListener) {
-        DatabaseReference chatReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES);
-        chatReference.child(String.valueOf(chat.getId())).setValue(chat.getId());
-        Task<Void> taskCreatingChat = chatReference.child(uid).child("Chats").child(chat.getId()).setValue(chat.getId());
+        DatabaseReference chatReference = databaseReference.child(CONSTANT_FIRE_CHAT);
+        Task<Void> taskCreatingChat = chatReference.child(String.valueOf(chat.getId())).setValue(chat.getId());
         taskCreatingChat.addOnSuccessListener(onSuccessListener)
         .addOnFailureListener(onFailureListener);
-        chatReference.child(ownId).child("Chats").child(chat.getId()).setValue(chat.getId());
+        databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER).child(ownId).child(CONSTANT_STRING_FIREBASE_CHAT_LIST).child(chat.getId()).setValue(chat.getId());
+        databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER).child(uid).child(CONSTANT_STRING_FIREBASE_CHAT_LIST).child(chat.getId()).setValue(chat.getId());
+
 
 
 

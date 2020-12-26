@@ -28,7 +28,7 @@ import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
 
 public class DataRepository{
-    private static final String CONSTANT_DEEPLINK_AUTHORITY = "letschat.cls-development.com";
+    private static final String CONSTANT_DEEPLINK_AUTHORITY = "https://letschat.cls-development.com/";
     private static final String CONSTANT_PATH_NAME_DEEPLINK = "chat_invite";
     private static final String CONSTANT_ID_STRING_DEEPLINK = "uid";
     private static final String CONSTANT_SOCIAL_TITLE = "Join anonymous chats with your friends";
@@ -98,22 +98,16 @@ public class DataRepository{
     }
 
     public void createDeepLinkToFirebaseClient(String insta, String number, OnCompleteListener<Void> onCompleteListener, String id, Context context){
-
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https")
-                .authority(CONSTANT_DEEPLINK_AUTHORITY)
-                .appendPath(CONSTANT_PATH_NAME_DEEPLINK)
-                .appendQueryParameter(CONSTANT_ID_STRING_DEEPLINK, id);
-        String myUrl = builder.build().toString();
+        String s ="https://letschat.cls-development.com/linktoanonymouschatting/";
         String query = "";
         try {
             query = URLEncoder.encode(String.format("&%1s=%2s", "uid", id), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String url = "letschat.cls-development.com/" + query;
+        String url = s+ query;
         Task<ShortDynamicLink> uri  = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLink(Uri.parse(myUrl))
+                .setLink(Uri.parse(url))
                 .setDomainUriPrefix(CONSTANT_DOMAIN_URI_PREFIX)
                 .setAndroidParameters(
                         new DynamicLink.AndroidParameters.Builder()
@@ -134,7 +128,7 @@ public class DataRepository{
 
                     }
                 })
-                .addOnCompleteListener(task -> Log.d(TAG,"loading")).addOnFailureListener(e -> Log.d(TAG," cause you are a cool person: " + e)).addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
+                .addOnCompleteListener(task -> Log.d(TAG,"loading")).addOnFailureListener(e -> Log.d(TAG," error" + e)).addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
                     @Override
                     public void onSuccess(ShortDynamicLink shortDynamicLink) {
                         Log.d(TAG,"successs");
