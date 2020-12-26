@@ -103,30 +103,20 @@ public class MainActivity extends AppCompatActivity {
         ViewModelFactory viewModelFactory = new ViewModelFactory();
         viewModel = new ViewModelProvider(this,viewModelFactory).get(ViewModel.class);
         deepLinkWork();
-        boolean error = true;
 
         try {
             viewModel.initViewModelInActivity(this);
-            error = false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            error = true;
-        }
-        if (error){
-            Log.d(TAG, "activityStartUp: " + error);
-
-            LoginFragment loginFragment = new LoginFragment();
-            transitionToFragment(loginFragment);
-
-        }
-        else {
-            Log.d(TAG, "activitySt12artUp: " + error);
 
             AllChatsFragment allChatsFragment = new AllChatsFragment();
             transitionToFragment(allChatsFragment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "activityStartUp: " + e);
 
-
+            LoginFragment loginFragment = new LoginFragment();
+            transitionToFragment(loginFragment);
         }
+
 
 
 

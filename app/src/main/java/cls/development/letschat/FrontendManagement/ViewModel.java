@@ -75,31 +75,43 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         Log.d(TAG, "startCheckUp1212333123: " + isConnected() + " " + dataRepository.getFirebaseUid() + " " + dataRepository.getUIDShared());
 
         if (isConnected()){
+            Log.d(TAG, "startCheckUp213123: ");
             if (dataRepository.getFirebaseUid() == null){
+                Log.d(TAG, "startChec12312kUp213123: ");
+
                 throw new Exception(getContext().getString(R.string.connected_but_no_id));
 
 
             }
             else{
+                Log.d(TAG, "12312startChec12312kUp213123: ");
+
                 uId.setValue(dataRepository.getFirebaseUid());
                 setIsConnected(true);
+                return;
 
             }
 
         }
         else{
+            Log.d(TAG, "1231123412startChec12312kUp213123: ");
+
             if (dataRepository.getUIDShared() == null){
+                Log.d(TAG, "12312startCh4124ec12312kUp213123: ");
+
                 throw new Exception(getContext().getString(R.string.not_connected_and_no_room_uid));
 
 
             }
             else{
+                Log.d(TAG, "12312startChec12312kUp213151523: ");
+
                 uId.setValue(dataRepository.getUIDShared());
                 setIsConnected(false);
+                return;
 
             }
         }
-        throw new Exception("nothing called");
 
 
     }
