@@ -11,6 +11,5 @@ public interface FirebaseClientCallback {
     public void chatChanged(Chat chat, ArrayList<Message> messages);
     public void allChats(ArrayList<Chat> chats);
     public void setDynamicLink(Uri uri);
-
-
+    public void setUserInformation(String s, String s1);
 }

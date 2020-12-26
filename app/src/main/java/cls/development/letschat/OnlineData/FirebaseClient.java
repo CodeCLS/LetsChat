@@ -250,4 +250,22 @@ public class FirebaseClient {
             }
         });
     }
+
+    public void getUserInformation(ViewModel model) {
+        DatabaseReference linkReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER).child(getUid());
+        linkReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    ((FirebaseClientCallback) model).setUserInformation(snapshot.child(CONSTANT_STRING_INSTAGRAM_HANDEL).getValue().toString(),snapshot.child(CONSTANT_STRING_NUMBER_HANDEL).getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 }

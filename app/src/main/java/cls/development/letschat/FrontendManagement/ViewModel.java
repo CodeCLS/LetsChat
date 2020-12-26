@@ -41,18 +41,19 @@ import cls.development.letschat.Room.Message;
 
 public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseClientCallback {
     private static final String TAG = "ViewModel";
-    private MutableLiveData<Chat> selectedChat = new MutableLiveData<>();
-    private MutableLiveData<String> uId = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Message>> arrayMessagesChat = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Chat>> arrayAllChats = new MutableLiveData<>();
-    private MutableLiveData<Uri> deepLink = new MutableLiveData<>();
-    private MutableLiveData<Uri> userDynamicLink = new MutableLiveData<>();
+    private static final String CONSTANT_INSTAGRAM_LINK = "https://instagram.com/";
+    private final MutableLiveData<Chat> selectedChat = new MutableLiveData<>();
+    private final MutableLiveData<String> uId = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<Message>> arrayMessagesChat = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<Chat>> arrayAllChats = new MutableLiveData<>();
+    private final MutableLiveData<Uri> deepLink = new MutableLiveData<>();
+    private final MutableLiveData<Uri> userDynamicLink = new MutableLiveData<>();
 
-    private MutableLiveData<Context> context = new MutableLiveData<>();
-    private MutableLiveData<View> view = new MutableLiveData<>();
-    private MutableLiveData<String> insta = new MutableLiveData<>();
-    private MutableLiveData<String> phone = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isConnected = new MutableLiveData<>();
+    private final MutableLiveData<Context> context = new MutableLiveData<>();
+    private final MutableLiveData<View> view = new MutableLiveData<>();
+    private final MutableLiveData<String> insta = new MutableLiveData<>();
+    private final MutableLiveData<String> phone = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isConnected = new MutableLiveData<>();
 
 
 
@@ -68,25 +69,26 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         return arrayAllChats.getValue();
     }
 
-    public void setArrayAllChats(ArrayList<Chat> arrayAllChats) {
-        this.arrayAllChats.setValue(arrayAllChats);
-    }
+
 
     public void initViewModelInActivity(Context context) throws Exception {
         this.context.setValue(context);
         dataRepository = DataRepository.getInstance(context);
         chatRepository = ChatRepository.getInstance();
-        dataRepository.getAllChats(this);
-        dataRepository.getUserLink(this);
+        setup();
         startCheckUp();
 
     }
 
+    private void setup() {
+        dataRepository.getAllChats(this);
+        dataRepository.getUserLink(this);
+        dataRepository.getUserInformation(this);
+    }
+
     private void startCheckUp() throws Exception {
-        Log.d(TAG, "startCheckUp1212333123: " + isConnected() + " " + dataRepository.getFirebaseUid() + " " + dataRepository.getUIDShared());
 
         if (isConnected()){
-            Log.d(TAG, "startCheckUp213123: ");
             if (dataRepository.getFirebaseUid() == null){
                 Log.d(TAG, "startChec12312kUp213123: ");
 
@@ -121,7 +123,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
 
                 uId.setValue(dataRepository.getUIDShared());
                 setIsConnected(false);
-                return;
 
             }
         }
@@ -130,9 +131,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     }
 
 
-    private void doOnlineWork() {
 
-    }
 
     public Boolean getIsConnected() {
         return isConnected.getValue();
@@ -190,7 +189,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         this.uId.setValue(uId);
     }
     public void signUpWithInstaAndNumber(String number, String insta, Activity activity, Context context, View view, LoginFragment loginFragment){
-        httpCallInsta(insta,"https://instagram.com/" + insta + "/",context,view,activity,number,loginFragment);
+        httpCallInsta(insta,CONSTANT_INSTAGRAM_LINK + insta + "/",context,view,activity,number,loginFragment);
 
 
     }
@@ -321,6 +320,12 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     @Override
     public void setDynamicLink(Uri uri) {
         setUserDynamicLink(uri);
+    }
+
+    @Override
+    public void setUserInformation(String s, String s1) {
+        this.insta.setValue(s);
+        this.phone.setValue(s1);
     }
 
     public void createChatFromDeepLink() {

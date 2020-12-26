@@ -180,4 +180,8 @@ public class DataRepository{
     public void getAllChats(ViewModel viewModel) {
         firebaseClient.getAllChats(viewModel);
     }
+
+    public void getUserInformation(ViewModel model) {
+        firebaseClient.getUserInformation(model);
+    }
 }
