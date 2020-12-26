@@ -23,6 +23,7 @@
             android:id="@+id/linear_main_btn_chat_new"
             android:translationZ="20dp"
             android:gravity="center"
+
             android:layout_height="@dimen/dp_button_height"
             android:background="@drawable/btn_round_dark_pink"
             android:orientation="horizontal"
@@ -35,8 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+
                 android:gravity="center"
-                android:text="&#129303; Create a new Instance"
+                android:text="&#129303; Share this app to gain more chats"
                 style="@style/edittext"
                 android:textColor="@color/white"
                 android:padding="12dp"
@@ -75,7 +77,7 @@
                 android:textSize="14sp"
                 android:maxLines="1"
                 android:gravity="center"
-                android:text="Remaining: 24h 23min and 23seconds"
+                android:text="These are all your chats"
                 android:layout_height="match_parent" />
             <ImageView
                 android:layout_width="@dimen/imageview_size_big"

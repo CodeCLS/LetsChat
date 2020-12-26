@@ -84,6 +84,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
 
             }
             else{
+                dataRepository.setIdShared(dataRepository.getFirebaseUid());
+
                 Log.d(TAG, "12312startChec12312kUp213123: ");
 
                 uId.setValue(dataRepository.getFirebaseUid());
@@ -116,17 +118,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
 
     }
 
-    private void doOfflineWork(AppCompatActivity owner) {
-        isConnected.observe(owner, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                setIsConnected(aBoolean);
-                Snackbar.make(owner.getCurrentFocus(),"",Snackbar.LENGTH_SHORT).show();
-
-            }
-        });
-
-    }
 
     private void doOnlineWork() {
 
@@ -247,9 +238,12 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     private void backendWorkNewUser(LoginFragment loginFragment,PhoneAuthCredential phoneAuthCredential,String insta, String number,View view) {
         Log.d(TAG, "enter123Code:12321 ");
 
+
         dataRepository.createNewUser(phoneAuthCredential, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                setuId(dataRepository.getFirebaseUid());
+                dataRepository.setIdShared(dataRepository.getFirebaseUid());
                 Log.d(TAG, "onComplete:123123123 ");
                 dataRepository.createNewUserInRealtimeDB(insta, number, new OnCompleteListener<Void>() {
                     @Override
@@ -259,6 +253,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "ent123erCode:12321 ");
+
 
                                 ((LoginNumberCallback) loginFragment).successfullyVerified(phoneAuthCredential);
                                 Snackbar.make(Objects.requireNonNull(view),R.string.succesfully_verified,Snackbar.LENGTH_SHORT).show();

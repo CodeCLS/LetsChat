@@ -42,6 +42,7 @@ public class DataRepository{
     private static final String CONSTANT_DOMAIN_URI_PREFIX = "letschat.cls-development.com";
     private static final int MAX_LENGTH_HASH = 10;
     private static final String CONSTANT_SHARED_NAME = "LetsChatApp";
+    private static final String CONSTANT_SHARED_ID_NAME = "uid";
     private final Context context;
     public FirebaseClient firebaseClient;
     private SharedPreferences sharedPreferences;
@@ -152,7 +153,7 @@ public class DataRepository{
     }
 
     public String getUIDShared() {
-        return sharedPreferences.getString("uid" , null);
+        return sharedPreferences.getString(CONSTANT_SHARED_ID_NAME , null);
 
 
     }
@@ -165,6 +166,13 @@ public class DataRepository{
     public void createNewUserInRealtimeDB(String insta, String number,OnCompleteListener<Void> onCompleteListener) {
         firebaseClient.addUserToRealTime(insta,number,onCompleteListener);
 
+
+    }
+
+    public void setIdShared(String firebaseUid) {
+        SharedPreferences.Editor sharedEdit = sharedPreferences.edit();
+        sharedEdit.putString(CONSTANT_SHARED_ID_NAME, firebaseUid);
+        sharedEdit.apply();
 
     }
 }
