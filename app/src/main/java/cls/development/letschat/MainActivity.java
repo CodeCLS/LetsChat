@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,6 +26,7 @@ import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 
 import cls.development.letschat.CustomViews.HeaderView;
+import cls.development.letschat.Fragments.AllChatsFragment;
 import cls.development.letschat.Fragments.LoginFragment;
 import cls.development.letschat.FrontendManagement.ViewModel;
 import cls.development.letschat.FrontendManagement.ViewModelFactory;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activityStartUp();
+
 
         initViews();
     }
@@ -69,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
                             viewModel.setDeepLink(deepLink);
                             viewModel.createChatFromDeepLink();
 
-                            LoginFragment loginFragment = new LoginFragment();
-                            transitionToFragment(loginFragment);
 
                         }
 
@@ -92,20 +94,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+
+    }
+
+    private void activityStartUp() {
         ViewModelFactory viewModelFactory = new ViewModelFactory();
         viewModel = new ViewModelProvider(this,viewModelFactory).get(ViewModel.class);
         try {
             viewModel.initViewModelInActivity(this,this);
             deepLinkWork();
+            AllChatsFragment allChatsFragment = new AllChatsFragment();
+            transitionToFragment(allChatsFragment);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            Snackbar.make(getCurrentFocus(),"Error: " +e,Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(findViewById(R.id.mainFrame),"Error: " +e,Snackbar.LENGTH_SHORT).show();
+            LoginFragment allChatsFragment = new LoginFragment();
+            transitionToFragment(allChatsFragment);
+
 
         }
-
-
-
     }
 
     public void setHeaderVisibility(int visibility){

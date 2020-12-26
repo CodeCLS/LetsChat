@@ -60,9 +60,9 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     }
     public void initViewModelInActivity(Context context,AppCompatActivity appCompatActivity) throws Exception {
         this.context.setValue(context);
-        startCheckUp(appCompatActivity);
         dataRepository = DataRepository.getInstance(context);
         chatRepository = ChatRepository.getInstance();
+        startCheckUp(appCompatActivity);
 
     }
 
@@ -74,7 +74,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         else if(isConnected()&&dataRepository.getFirebaseUid() != null){
             uId.setValue(dataRepository.getFirebaseUid());
             setIsConnected(true);
-            doOnlineWork();
+            //doOnlineWork();
 
             return;
         }
@@ -84,7 +84,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
             uId.setValue(dataRepository.getUIDShared());
             setIsConnected(false);
 
-            doOfflineWork(owner);
+            //doOfflineWork(owner);
         }
 
     }
