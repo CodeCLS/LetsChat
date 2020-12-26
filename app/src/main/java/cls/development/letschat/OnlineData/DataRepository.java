@@ -39,6 +39,10 @@ public class DataRepository{
     private static final String CONSTANT_SHARED_ID_NAME = "uid";
     private static final String CONSTANT_SAME_ID = "You can't chat with yourself";
     private static final String CONSTANT_SHARED_LINK_USER = "UserDynamicLink";
+    private static final String CONSTANT_SHORT_LINK_DYNAMIC ="letschat.cls-development.com/linktoanonymouschatting";
+    private static final String CONSTANT_FULL_LINK_DYNAMIC ="https://letschat.cls-development.com/linktoanonymouschatting";
+
+
     private final Context context;
     public FirebaseClient firebaseClient;
     private SharedPreferences sharedPreferences;
@@ -98,18 +102,15 @@ public class DataRepository{
     }
 
     public void createDeepLinkToFirebaseClient(String insta, String number, OnCompleteListener<Void> onCompleteListener, String id, Context context){
-        String s ="https://letschat.cls-development.com/linktoanonymouschatting";
-        // Build the link with all required parameters
-        String u ="letschat.cls-development.com/linktoanonymouschatting";
         Uri.Builder builder = new Uri.Builder()
                 .scheme("https")
-                .authority(u)
+                .authority(CONSTANT_SHORT_LINK_DYNAMIC)
                 .path("ID")
                 .appendQueryParameter("id", id);
         String myUrl = builder.build().toString();
         Task<ShortDynamicLink> uri  = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(Uri.parse(myUrl))
-                .setDomainUriPrefix(s)
+                .setDomainUriPrefix(CONSTANT_FULL_LINK_DYNAMIC)
                 .setAndroidParameters(
                         new DynamicLink.AndroidParameters.Builder()
                                 .setMinimumVersion(11)
@@ -132,17 +133,8 @@ public class DataRepository{
                 .addOnCompleteListener(task -> Log.d(TAG,"loading")).addOnFailureListener(e -> Log.d(TAG," error" + e)).addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
                     @Override
                     public void onSuccess(ShortDynamicLink shortDynamicLink) {
-                        Log.d(TAG,"successs");
                         if (shortDynamicLink != null){
                             firebaseClient.addUserToRealTime(insta,number,onCompleteListener,shortDynamicLink.getShortLink());
-                            //Log.d(TAG,"linkk" + shortDynamicLink.getShortLink());
-                            //Intent sendIntent = new Intent();
-                            //sendIntent.setAction(Intent.ACTION_SEND);
-                            //sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Jemand will dir einen coolen Kletter Post zeigen");
-                            //sendIntent.setType("text/plain");
-                            //sendIntent.putExtra("Post_ID",id);
-                            //sendIntent.putExtra(Intent.EXTRA_TEXT,"Tritt der Kletter Community bei und zeige uns deine coolen Momente beim Klettern. Downloade jetzt." + shortDynamicLink.getShortLink());
-                            //mContext.startActivity(sendIntent);
 
 
                         }

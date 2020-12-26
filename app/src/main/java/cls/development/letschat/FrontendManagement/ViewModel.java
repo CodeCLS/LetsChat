@@ -320,7 +320,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
 
     @Override
     public void setDynamicLink(Uri uri) {
-        setDynamicLink(uri);
+        setUserDynamicLink(uri);
     }
 
     public void createChatFromDeepLink() {
@@ -357,5 +357,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     }
 
 
-
+    public MutableLiveData<String> getInstaObserver() {
+        return insta;
+    }
 }

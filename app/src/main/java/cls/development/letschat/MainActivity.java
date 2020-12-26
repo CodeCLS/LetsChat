@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
@@ -41,10 +42,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-
         activityStartUp();
+        headerWork();
 
 
+
+    }
+
+    private void headerWork() {
+        viewModel.getInstaObserver().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                headerView.setTextInsta(s);
+            }
+        });
     }
 
     private void initViews() {
