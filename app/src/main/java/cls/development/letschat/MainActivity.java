@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
                         if (pendingDynamicLinkData != null) {
                             deepLink = pendingDynamicLinkData.getLink();
-                            viewModel.setDeepLink(deepLink);
+                            viewModel.setDeepLink(pendingDynamicLinkData.getLink());
                             viewModel.createChatFromDeepLink();
 
 

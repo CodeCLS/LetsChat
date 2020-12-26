@@ -15,4 +15,5 @@
     <string name="connected_but_no_id">Connected to internet but not uid</string>
     <string name="not_connected_and_no_room_uid">User isn\'t connected and doesn\'t have a room uid.</string>
     <string name="back_online_offline_again">You are back</string>
+    <string name="invite">want\'s to invite you to LetsChat and listen to your opinions, statements and questions anonymously. Have fun :)</string>
 </resources>

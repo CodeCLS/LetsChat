@@ -7,10 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,6 +24,7 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +46,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     private MutableLiveData<ArrayList<Message>> arrayMessagesChat = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Chat>> arrayAllChats = new MutableLiveData<>();
     private MutableLiveData<Uri> deepLink = new MutableLiveData<>();
+    private MutableLiveData<Uri> userDynamicLink = new MutableLiveData<>();
+
     private MutableLiveData<Context> context = new MutableLiveData<>();
     private MutableLiveData<View> view = new MutableLiveData<>();
     private MutableLiveData<String> insta = new MutableLiveData<>();
@@ -63,11 +63,21 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     public ViewModel() {
 
     }
+
+    public ArrayList<Chat> getArrayAllChats() {
+        return arrayAllChats.getValue();
+    }
+
+    public void setArrayAllChats(ArrayList<Chat> arrayAllChats) {
+        this.arrayAllChats.setValue(arrayAllChats);
+    }
+
     public void initViewModelInActivity(Context context) throws Exception {
         this.context.setValue(context);
         dataRepository = DataRepository.getInstance(context);
         chatRepository = ChatRepository.getInstance();
         dataRepository.getAllChats(this);
+        dataRepository.getUserLink(this);
         startCheckUp();
 
     }
@@ -146,6 +156,13 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
 
     public void setDeepLink(Uri deepLink) {
         this.deepLink.setValue(deepLink);
+    }
+    public Uri getUserDynamicLink() {
+        return userDynamicLink.getValue();
+    }
+
+    public void setUserDynamicLink(Uri deepLink) {
+        this.userDynamicLink.setValue(deepLink);
     }
 
     public View getView() {
@@ -270,7 +287,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
                         });
 
                     }
-                });
+                },context.getValue());
             }
         });
 
@@ -299,6 +316,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         arrayAllChats.setValue(chats);
         Log.d(TAG, "allChats: "+arrayAllChats.getValue());
 
+    }
+
+    @Override
+    public void setDynamicLink(Uri uri) {
+        setDynamicLink(uri);
     }
 
     public void createChatFromDeepLink() {
@@ -333,4 +355,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     public void setPhone(String phone) {
         this.phone.setValue(phone);
     }
+
+
+
 }

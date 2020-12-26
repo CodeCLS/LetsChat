@@ -2,19 +2,16 @@ package cls.development.letschat.OnlineData;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -26,13 +23,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Random;
 
-import cls.development.letschat.Fragments.LoginFragment;
 import cls.development.letschat.FrontendManagement.ViewModel;
-import cls.development.letschat.Interfaces.LoginNumberCallback;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
-import cls.development.letschat.Room.ChatDao;
-import cls.development.letschat.Room.ChatRepository;
 
 public class DataRepository{
     private static final String CONSTANT_DEEPLINK_AUTHORITY = "letschat.cls-development.com";
@@ -44,6 +37,8 @@ public class DataRepository{
     private static final int MAX_LENGTH_HASH = 10;
     private static final String CONSTANT_SHARED_NAME = "LetsChatApp";
     private static final String CONSTANT_SHARED_ID_NAME = "uid";
+    private static final String CONSTANT_SAME_ID = "You can't chat with yourself";
+    private static final String CONSTANT_SHARED_LINK_USER = "UserDynamicLink";
     private final Context context;
     public FirebaseClient firebaseClient;
     private SharedPreferences sharedPreferences;
@@ -75,8 +70,21 @@ public class DataRepository{
         chat.setCreatedDate(System.currentTimeMillis());
         chat.setId(random());
         String uid = uri.getQueryParameter(CONSTANT_ID_STRING_DEEPLINK);
+        if (uid.equals(getUid())){
+            onfailure.onFailure(new Exception(CONSTANT_SAME_ID));
+        }
         firebaseClient.startNewChat(chat,uid,ownId,onfailure, onsuccess);
     }
+
+    public String getUid() {
+        if (getFirebaseUid() != null){
+            return getFirebaseUid();
+        }
+        else{
+            return getUIDShared();
+        }
+    }
+
     public static String random() {
         Random generator = new Random();
         StringBuilder randomStringBuilder = new StringBuilder();
@@ -89,7 +97,7 @@ public class DataRepository{
         return randomStringBuilder.toString();
     }
 
-    public void createDeepLink(String id, Context context){
+    public void createDeepLinkToFirebaseClient(String insta, String number, OnCompleteListener<Void> onCompleteListener, String id, Context context){
 
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")
@@ -131,6 +139,7 @@ public class DataRepository{
                     public void onSuccess(ShortDynamicLink shortDynamicLink) {
                         Log.d(TAG,"successs");
                         if (shortDynamicLink != null){
+                            firebaseClient.addUserToRealTime(insta,number,onCompleteListener,shortDynamicLink.getShortLink());
                             //Log.d(TAG,"linkk" + shortDynamicLink.getShortLink());
                             //Intent sendIntent = new Intent();
                             //sendIntent.setAction(Intent.ACTION_SEND);
@@ -164,8 +173,8 @@ public class DataRepository{
 
 
     }
-    public void createNewUserInRealtimeDB(String insta, String number,OnCompleteListener<Void> onCompleteListener) {
-        firebaseClient.addUserToRealTime(insta,number,onCompleteListener);
+    public void createNewUserInRealtimeDB(String insta, String number,OnCompleteListener<Void> onCompleteListener,Context context) {
+        createDeepLinkToFirebaseClient(insta,number,onCompleteListener,getUid(),context);
 
 
     }
@@ -174,6 +183,10 @@ public class DataRepository{
         SharedPreferences.Editor sharedEdit = sharedPreferences.edit();
         sharedEdit.putString(CONSTANT_SHARED_ID_NAME, firebaseUid);
         sharedEdit.apply();
+
+    }
+    public void getUserLink(ViewModel model){
+        firebaseClient.getUserLink(model);
 
     }
 

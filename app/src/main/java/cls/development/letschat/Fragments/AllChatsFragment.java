@@ -1,5 +1,6 @@
 package cls.development.letschat.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,18 +26,16 @@ import java.util.Objects;
 import cls.development.letschat.Adapter.MainAdapterChats;
 import cls.development.letschat.Interfaces.AdapterCallbackFragment;
 import cls.development.letschat.MainActivity;
-import cls.development.letschat.OnlineData.DataRepository;
 import cls.development.letschat.R;
 import cls.development.letschat.Room.Chat;
-import cls.development.letschat.Room.Message;
 import cls.development.letschat.FrontendManagement.ViewModel;
 import cls.development.letschat.FrontendManagement.ViewModelFactory;
 
 public class AllChatsFragment extends Fragment implements AdapterCallbackFragment {
     public static final String CONSTANT_TRANSACTION_CHAT_BUNDLE_NAME = "selected_chat";
     private static final String TAG = "AllChatsFragment";
-    private LinearLayout btnNewChatLinear;
-    private TextView btnNewChat;
+    private LinearLayout btnInviteLinear;
+    private TextView btnInviteToChat;
     private RecyclerView recyclerView;
     private ImageView shareBtn;
     private ImageView copyBtn;
@@ -60,8 +58,20 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
     }
 
     private void init() {
-        btnNewChat = getView().findViewById(R.id.btn_new_chat_txt);
-        btnNewChatLinear = getView().findViewById(R.id.linear_main_btn_chat_new);
+        btnInviteToChat = getView().findViewById(R.id.btn_new_chat_txt);
+        btnInviteLinear = getView().findViewById(R.id.linear_main_btn_chat_new);
+        btnInviteLinear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT,getContext().getString(R.string.welcome_text));
+                sendIntent.setType("text/plain");
+                sendIntent.putExtra(Intent.EXTRA_TEXT,viewModel.getInsta() + " " +getContext().getString(R.string.invite) + " " +viewModel.getUserDynamicLink());
+                getContext().startActivity(sendIntent);
+            }
+        });
+
         initRecyclerView();
         changeHeaderVisibility();
 
@@ -80,14 +90,10 @@ public class AllChatsFragment extends Fragment implements AdapterCallbackFragmen
     private void initRecyclerView() {
         recyclerView = getView().findViewById(R.id.recyclerview_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<Message> arrayPlaceHolder = new ArrayList<>();
-        ArrayList<Chat> array = new ArrayList<>();
+        ArrayList<Chat> array = viewModel.getArrayAllChats();
+        if (array== null)
+            array= new ArrayList<>();
 
-        if (viewModel.getDeepLink()!= null)
-
-
-
-        array.add(new Chat("asd",false,false, ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.secondary),1230812,379187239,arrayPlaceHolder,"Hello","2",null));
         adapterChats = new MainAdapterChats(array,this);
         recyclerView.setAdapter(adapterChats);
 

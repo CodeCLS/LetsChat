@@ -2,6 +2,7 @@ package cls.development.letschat.OnlineData;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -45,6 +47,8 @@ public class FirebaseClient {
     private static final String CONSTANT_CHAT_CREATED_FIRE = "Created";
     private static final String CONSTANT_CHAT_ID_FIRE = "id";
     private static final long CONSTANT_MILLIS_DAY = 86400000;
+    private static final String CONSTANT_FIRE_CHAT = "Chats";
+    private static final String CONSTANT_USER_URI_INVITE = "uriInvite";
     public static FirebaseClient firebaseClient;
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
@@ -165,11 +169,12 @@ public class FirebaseClient {
                 .addOnCompleteListener(onCompleteListener);
     }
 
-    public void addUserToRealTime(String insta, String number,OnCompleteListener<Void> onCompleteListener) {
+    public void addUserToRealTime(String insta, String number, OnCompleteListener<Void> onCompleteListener, Uri deepLink) {
         Log.d(TAG, "addUserToRealTime123123: ");
         DatabaseReference userReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER);
         Task<Void> taskCreateUser = userReference.child(getUid()).setValue(getUid());
         userReference.child(getUid()).child(CONSTANT_STRING_INSTAGRAM_HANDEL).setValue(insta);
+        userReference.child(getUid()).child(CONSTANT_USER_URI_INVITE).setValue(deepLink.toString());
         userReference.child(getUid()).child(CONSTANT_STRING_NUMBER_HANDEL).setValue(number);
         userReference.child(getUid()).child(CONSTANT_STRING_FIREBASE_CHAT_LIST).setValue(CONSTANT_STRING_FIREBASE_CHAT_LIST);
 
@@ -186,8 +191,9 @@ public class FirebaseClient {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Chat> chats = new ArrayList<>();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    if (Long.parseLong(Objects.requireNonNull(dataSnapshot.child(CONSTANT_CHAT_CREATED_FIRE).getValue()).toString()) +CONSTANT_MILLIS_DAY> System.currentTimeMillis() )
-                        dataSnapshot. getRef().removeValue();
+                    if (Long.parseLong(Objects.requireNonNull(dataSnapshot.child(CONSTANT_CHAT_CREATED_FIRE).getValue()).toString()) +CONSTANT_MILLIS_DAY> System.currentTimeMillis() ) {
+                        deleteChatFromDB(dataSnapshot);
+                    }
                     else {
                         Chat chat = new Chat();
                         chat.setCreatedDate(Long.parseLong(Objects.requireNonNull(dataSnapshot.child(CONSTANT_CHAT_CREATED_FIRE).getValue()).toString()));
@@ -196,7 +202,6 @@ public class FirebaseClient {
                     }
                 }
                 ((FirebaseClientCallback) viewModel).allChats(chats);
-
             }
 
             @Override
@@ -207,5 +212,42 @@ public class FirebaseClient {
 
 
 
+    }
+
+    private void deleteChatFromDB(DataSnapshot dataSnapshot) {
+        deleteChat(dataSnapshot.child(CONSTANT_CHAT_ID_FIRE).getValue().toString(), new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                dataSnapshot.getRef().removeValue();
+
+            }
+        });
+        deleteChatFromRoom(dataSnapshot.child(CONSTANT_CHAT_ID_FIRE).getValue().toString());
+    }
+
+    private void deleteChatFromRoom(String toString) {
+
+    }
+
+    private void deleteChat(String value,OnCompleteListener onCompleteListener) {
+        databaseReference.child(CONSTANT_FIRE_CHAT).child(value).removeValue();
+
+    }
+
+    public void getUserLink(ViewModel model) {
+        DatabaseReference linkReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER).child(getUid()).child(CONSTANT_USER_URI_INVITE);
+        linkReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    ((FirebaseClientCallback) model).setDynamicLink(Uri.parse(Objects.requireNonNull(snapshot.getValue()).toString()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
