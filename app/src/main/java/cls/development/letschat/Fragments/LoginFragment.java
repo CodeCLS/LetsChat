@@ -56,6 +56,7 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated:12321 ");
+
         ViewModelFactory viewModelFactory = new ViewModelFactory();
         viewModel = new ViewModelProvider(requireActivity(),viewModelFactory).get(ViewModel.class);
 
@@ -69,6 +70,8 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
 
         darkBackground = getView().findViewById(R.id.darkened_background_login);
         verificationContainer = getView().findViewById(R.id.verification_Container_Login);
+        verificationContainer.addFragmentActivity(requireActivity());
+        verificationContainer.init();
         continueButton = getView().findViewById(R.id.login_linearlayout_btn_container);
         backgroundContainer = getView().findViewById(R.id.background_container_login);
         LoginFragment loginFragment = this;
@@ -85,7 +88,9 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
 
                 }
                 else{
-                    viewModel.signUpWithInstaAndNumber("+4917641025403" , "calebseeling" ,getActivity(),getContext(),getView(),loginFragment );
+                    viewModel.setInsta(editTextInstagram.getText().toString());
+                    viewModel.setPhone(editTelephoneNumber.getText().toString());
+                    viewModel.signUpWithInstaAndNumber(editTelephoneNumber.getText().toString().trim() , editTextInstagram.getText().toString() ,getActivity(),getContext(),getView(),loginFragment );
 
                 }
 
@@ -209,8 +214,8 @@ public class LoginFragment extends androidx.fragment.app.Fragment implements Log
 
     }
 
-    public void checkCode(String code, String verification) {
-        viewModel.enterCode(code,verification);
+    public void checkCode(LoginFragment loginFragment,String insta, String number, View view,String code, String verification) {
+        viewModel.enterCode(loginFragment,insta,number,view,code,verification);
     }
 
 

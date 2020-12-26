@@ -10,10 +10,12 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.dynamiclinks.DynamicLink;
@@ -155,8 +157,13 @@ public class DataRepository{
 
     }
 
-    public void createNewUser(LoginFragment loginFragment, PhoneAuthCredential phoneAuthCredential) {
-        firebaseClient.createNewUser(loginFragment,phoneAuthCredential);
+    public void createNewUser(PhoneAuthCredential phoneAuthCredential, OnCompleteListener<AuthResult> onSuccessListener) {
+        firebaseClient.createNewUser(phoneAuthCredential,onSuccessListener);
+
+
+    }
+    public void createNewUserInRealtimeDB(String insta, String number,OnSuccessListener<Void> onSuccesListener) {
+        firebaseClient.addUserToRealTime(insta,number,onSuccesListener);
 
 
     }

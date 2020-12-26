@@ -18,10 +18,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -47,6 +50,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
     private MutableLiveData<Uri> deepLink = new MutableLiveData<>();
     private MutableLiveData<Context> context = new MutableLiveData<>();
     private MutableLiveData<View> view = new MutableLiveData<>();
+    private MutableLiveData<String> insta = new MutableLiveData<>();
+    private MutableLiveData<String> phone = new MutableLiveData<>();
     private MutableLiveData<Boolean> isConnected = new MutableLiveData<>();
 
 
@@ -164,11 +169,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         this.uId.setValue(uId);
     }
     public void signUpWithInstaAndNumber(String number, String insta, Activity activity, Context context, View view, LoginFragment loginFragment){
-        httpCallInsta("https://instagram.com/" + insta + "/",context,view,activity,number,loginFragment);
+        httpCallInsta(insta,"https://instagram.com/" + insta + "/",context,view,activity,number,loginFragment);
 
 
     }
-    public void httpCallInsta(String url, Context context, View view, Activity activity, String number, LoginFragment loginFragment) {
+    public void httpCallInsta(String insta,String url, Context context, View view, Activity activity, String number, LoginFragment loginFragment) {
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -177,7 +182,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + response);
-                        callBackVerification(number, activity,loginFragment,view);
+                        callBackVerification(insta,number, activity,loginFragment,view);
 
                         // enjoy your response
                     }
@@ -194,12 +199,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         queue.add(stringRequest);
     }
 
-    private void callBackVerification(String number, Activity activity, LoginFragment loginFragment,View view) {
+    private void callBackVerification(String insta,String number, Activity activity, LoginFragment loginFragment,View view) {
         dataRepository.sendVerificationPhone(number, activity, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                Snackbar.make(Objects.requireNonNull(view),R.string.succesfully_verified,Snackbar.LENGTH_SHORT).show();
-                backendWorkNewUser(loginFragment);
+                backendWorkNewUser(loginFragment,phoneAuthCredential,insta,number,view);
 
 
 
@@ -228,15 +232,34 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         });
     }
 
-    private void backendWorkNewUser(LoginFragment loginFragment) {
-        dataRepository.createNewUser(loginFragment);
+    private void backendWorkNewUser(LoginFragment loginFragment,PhoneAuthCredential phoneAuthCredential,String insta, String number,View view) {
+        Log.d(TAG, "enter123Code:12321 ");
+
+        dataRepository.createNewUser(phoneAuthCredential, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d(TAG, "onComplete:123123123 ");
+                dataRepository.createNewUserInRealtimeDB(insta, number, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "ent123erCode:12321 ");
+
+                        ((LoginNumberCallback) loginFragment).successfullyVerified(phoneAuthCredential);
+                        Snackbar.make(Objects.requireNonNull(view),R.string.succesfully_verified,Snackbar.LENGTH_SHORT).show();
+
+
+                    }
+                });
+
+
+            }
+        });
     }
 
-    public void enterCode(String code,String verificationId){
-        Log.d(TAG, "enterCode:123123 ");
+    public void enterCode(LoginFragment loginFragment,String insta,String number,View view,String code,String verificationId){
+        Log.d(TAG, "enterCode:12321 ");
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        Log.d(TAG, "enterCode:123123 "+credential);
-        Log.d(TAG, "enterCode:1323123 "+credential.getProvider());
+        backendWorkNewUser(loginFragment,credential,insta,number,view);
 
 
 
@@ -275,4 +298,16 @@ public class ViewModel extends androidx.lifecycle.ViewModel implements FirebaseC
         return Runtime.getRuntime().exec(command).waitFor() == 0;
     }
 
+    public String getInsta() {
+        return insta.getValue();
+    }
+    public String getPhone() {
+        return phone.getValue();
+    }
+    public void setInsta(String insta) {
+        this.insta.setValue(insta);
+    }
+    public void setPhone(String phone) {
+        this.phone.setValue(phone);
+    }
 }

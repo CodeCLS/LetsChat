@@ -38,6 +38,9 @@ public class FirebaseClient {
     private static final String TAG = "FirebaseClient";
     private static final String CONSTANT_STRING_FIREBASE_REALTIME_MESSAGES = "Messages";
     private static final int MAX_LENGTH_HASH = 10;
+    private static final String CONSTANT_STRING_INSTAGRAM_HANDEL = "Insta";
+    private static final String CONSTANT_STRING_NUMBER_HANDEL = "Number";
+    private static final String CONSTANT_STRING_FIREBASE_CHAT_LIST = "UserChats";
     public static FirebaseClient firebaseClient;
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
@@ -148,19 +151,25 @@ public class FirebaseClient {
 
     }
 
-    public void createNewUser(LoginFragment loginFragment, PhoneAuthCredential phoneAuthCredential,OnCompleteListener<AuthResult> onCompleteListener,String insta,String number) {
+    public void createNewUser(PhoneAuthCredential phoneAuthCredential,OnCompleteListener<AuthResult> onCompleteListener) {
         signInWithPhoneAuthCredential(phoneAuthCredential,onCompleteListener);
 
     }
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential,OnCompleteListener<AuthResult> onCompleteListener) {
+        Log.d(TAG, "signInWithPhoneAuthCredential:1231231 ");
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(onCompleteListener);
     }
 
-    public void addUserToRealTime(String insta,String number,OnSuccessListener<Void> onSuccessListener) {
-        DatabaseReference chatReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER);
-        Task<Void> taskCreateUser = chatReference.child(getUid()).setValue(getUid());
+    public void addUserToRealTime(String insta, String number,OnSuccessListener<Void> onSuccessListener) {
+        DatabaseReference userReference = databaseReference.child(CONSTANT_STRING_FIREBASE_REALTIME_USER);
+        Task<Void> taskCreateUser = userReference.child(getUid()).setValue(getUid());
         taskCreateUser.addOnSuccessListener(onSuccessListener);
-        LoginNumberCallback loginNumberCallback = (LoginNumberCallback) loginFragment;
+        userReference.child(getUid()).child(CONSTANT_STRING_INSTAGRAM_HANDEL).setValue(insta);
+        userReference.child(getUid()).child(CONSTANT_STRING_NUMBER_HANDEL).setValue(insta);
+        userReference.child(getUid()).child(CONSTANT_STRING_FIREBASE_CHAT_LIST).setValue(CONSTANT_STRING_FIREBASE_CHAT_LIST);
+
+
     }
+
 }
