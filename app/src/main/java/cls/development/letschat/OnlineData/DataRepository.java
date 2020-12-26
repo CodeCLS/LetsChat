@@ -98,17 +98,18 @@ public class DataRepository{
     }
 
     public void createDeepLinkToFirebaseClient(String insta, String number, OnCompleteListener<Void> onCompleteListener, String id, Context context){
-        String s ="https://letschat.cls-development.com/linktoanonymouschatting/";
-        String query = "";
-        try {
-            query = URLEncoder.encode(String.format("&%1s=%2s", "uid", id), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        String url = s+ query;
+        String s ="https://letschat.cls-development.com/linktoanonymouschatting";
+        // Build the link with all required parameters
+        String u ="letschat.cls-development.com/linktoanonymouschatting";
+        Uri.Builder builder = new Uri.Builder()
+                .scheme("https")
+                .authority(u)
+                .path("ID")
+                .appendQueryParameter("id", id);
+        String myUrl = builder.build().toString();
         Task<ShortDynamicLink> uri  = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLink(Uri.parse(url))
-                .setDomainUriPrefix(CONSTANT_DOMAIN_URI_PREFIX)
+                .setLink(Uri.parse(myUrl))
+                .setDomainUriPrefix(s)
                 .setAndroidParameters(
                         new DynamicLink.AndroidParameters.Builder()
                                 .setMinimumVersion(11)
